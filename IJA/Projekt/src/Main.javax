@@ -1,0 +1,147 @@
+package src;
+
+import src.model.board.AbstractFactorySolitaire;
+import src.model.board.FactoryKlondike;
+import src.model.board.ID;
+import src.model.cards.Card;
+import java.util.Scanner;
+
+/**
+ * MAIN
+ *
+ * @author xmarti76
+ * @version 2017.5.8
+ */
+public class Main {
+	public static void main ( String[] args ) {
+		AbstractFactorySolitaire game = new FactoryKlondike();
+
+		Scanner in = new Scanner( System.in );
+System.out.println("pravda:" + (new Card( Card.Color.HEARTS, 5 ).equals( new Card( Card.Color.HEARTS, 5 ))));
+		while ( true ) {
+			System.out.println("MOVE 10 H 5 D, REVEAL, UNDO, TURN J S, HELP, EXIT:\n");
+			String input = in.next(); // Scans the next token of the input as an int.
+
+			System.out.println("input:" + input);
+			
+			String valueToString;
+			String colorToString;
+
+			switch ( input ) {
+				case "MOVE":
+					int        valueFrom  = game.valueToInt      ( in.next() );
+					Card.Color colorFrom  = Card.Color.fromString( in.next() );
+					valueToString = in.next();
+					colorToString = in.next();
+
+					System.out.println(valueToString + ":" + colorToString);
+					if ( valueToString.equals( "P" ) ) {
+						switch ( colorToString ) {
+							case "1":  System.out.println( "###: " + game.move( new Card( colorFrom, valueFrom ), ID.PileID.P1 ) ); break;
+							case "2":  System.out.println( "###: " + game.move( new Card( colorFrom, valueFrom ), ID.PileID.P2 ) ); break;
+							case "3":  System.out.println( "###: " + game.move( new Card( colorFrom, valueFrom ), ID.PileID.P3 ) ); break;
+							case "4":  System.out.println( "###: " + game.move( new Card( colorFrom, valueFrom ), ID.PileID.P4 ) ); break;
+							case "5":  System.out.println( "###: " + game.move( new Card( colorFrom, valueFrom ), ID.PileID.P5 ) ); break;
+							case "6":  System.out.println( "###: " + game.move( new Card( colorFrom, valueFrom ), ID.PileID.P6 ) ); break;
+							case "7":  System.out.println( "###: " + game.move( new Card( colorFrom, valueFrom ), ID.PileID.P7 ) ); break;
+						}
+					}
+					else if ( valueToString.equals( "F" ) ) {
+						switch ( colorToString ) {
+							case "1":  System.out.println( "###: " + game.move( new Card( colorFrom, valueFrom ), ID.FoundationID.F1 ) ); break;
+							case "2":  System.out.println( "###: " + game.move( new Card( colorFrom, valueFrom ), ID.FoundationID.F2 ) ); break;
+							case "3":  System.out.println( "###: " + game.move( new Card( colorFrom, valueFrom ), ID.FoundationID.F3 ) ); break;
+							case "4":  System.out.println( "###: " + game.move( new Card( colorFrom, valueFrom ), ID.FoundationID.F4 ) ); break;
+						}
+					}
+					else {
+						int        valueTo = game.valueToInt      ( valueToString );
+						Card.Color colorTo = Card.Color.fromString( colorToString );
+						System.out.println( "###: " + game.move( new Card( colorFrom, valueFrom ), new Card( colorTo, valueTo ) ) );
+					}
+					
+					break;
+					
+				case "REVEAL":
+					System.out.println ( "###: " + game.reveal() );
+					break;
+					
+				case "UNDO":
+					System.out.println ( "###: " + game.undo() );
+					break;
+					
+				case "TURN":
+					valueToString = in.next();
+					colorToString = in.next();
+					if ( valueToString.equals( "P" ) ) {
+						switch ( colorToString ) {
+							case "1":  System.out.println ( "###: " + game.turn( ID.PileID.P1 ) ); break;
+							case "2":  System.out.println ( "###: " + game.turn( ID.PileID.P2 ) ); break;
+							case "3":  System.out.println ( "###: " + game.turn( ID.PileID.P3 ) ); break;
+							case "4":  System.out.println ( "###: " + game.turn( ID.PileID.P4 ) ); break;
+							case "5":  System.out.println ( "###: " + game.turn( ID.PileID.P5 ) ); break;
+							case "6":  System.out.println ( "###: " + game.turn( ID.PileID.P6 ) ); break;
+							case "7":  System.out.println ( "###: " + game.turn( ID.PileID.P7 ) ); break;
+						}
+					}
+					else {
+						int        value = game.valueToInt      ( valueToString );
+						Card.Color color = Card.Color.fromString( colorToString );
+						System.out.println ( "###: " + game.turn( new Card( color, value ) ) );
+					}
+
+					break;
+
+
+				case "HELP":
+					System.out.println ( "###HELP: " + game.help() );
+
+					break;
+
+				case "EXIT":
+					return;
+
+				default:
+					continue;
+			}
+			
+
+			System.out.println("Stock: " + game.getStockSize());
+			System.out.println("Waste: " + game.getWaste());
+			System.out.println(
+				  "F1: " + game.getFoundation(ID.FoundationID.F1) + 
+				"\nF2: " + game.getFoundation(ID.FoundationID.F2) +
+				"\nF3: " + game.getFoundation(ID.FoundationID.F3) +
+				"\nF4: " + game.getFoundation(ID.FoundationID.F4)
+			);
+			System.out.println(
+				  "P1: " + game.getPile(ID.PileID.P1) + 
+				"\nP2: " + game.getPile(ID.PileID.P2) +
+				"\nP3: " + game.getPile(ID.PileID.P3) +
+				"\nP4: " + game.getPile(ID.PileID.P4) +
+				"\nP5: " + game.getPile(ID.PileID.P5) +
+				"\nP6: " + game.getPile(ID.PileID.P6) +
+				"\nP7: " + game.getPile(ID.PileID.P7)
+			);
+		}
+	}
+
+	private static int StrToInt( String in ) {
+		switch ( in ) {
+			case "A":  return 1;
+			case "2":  return 2;
+			case "3":  return 3;
+			case "4":  return 4;
+			case "5":  return 5;
+			case "6":  return 6;
+			case "7":  return 7;
+			case "8":  return 8;
+			case "9":  return 9;
+			case "10": return 10;
+			case "J":  return 11;
+			case "Q":  return 12;
+			case "K":  return 13;
+			default:   return 0;
+		}
+	}
+}
