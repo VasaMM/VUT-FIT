@@ -1,0 +1,75 @@
+.TH TRACE 8
+.SH NAME
+trace
+.SH SYNOPSIS
+.B trace
+[\fB\-f\fR \fIfirst_ttl\fR]
+[\fB\-m\fR \fImax_ttl\fR]
+[\fB\-t\fR \fItimeout\fR]
+[\fB\-p\fR \fIport\fR]
+[\fB\-\-ptr\fR]
+[\fB\-\-no\-ptr\fR]
+\fIdestination\fR
+.SH DESCRIPTION
+It traces path to \fIdestination\fR discovering MTU along this path. It uses UDP socket on port \fIport\fR. The destination can be specified as an IP address (supports IPv4 and IPv6) or as a host name. 
+.SH OPTIONS
+.TP
+.BR \-f
+Set first hop, default is 1
+.TP
+.BR \-m
+Set maximum hops, default is 30
+.TP
+.BR \-t
+Set timeout in seconds, default is 2 s.
+.TP
+.BR \-p
+Host port for communication, default value is from range 49 152 - 65 535.
+.TP
+.BR \-\-ptr
+Turns on the hop address translation to hostname.
+.TP
+.BR \-\-no\-ptr
+Turns off the hop address translation to hostname.
+.SH OUTPUT
+    1    147.229.12.1                                           5.648 ms
+.SP
+    2    147.229.254.217                                        *
+.SP
+    3    ...                                                    H!
+.SP
+   10    irf-kou.net.vutbr.cz                                  21.900 ms
+.SP
+   11    piranha.ro.vutbr.cz                                   28.086 ms
+.PP
+The first column shows TTL of the probe, followed by colon.
+.PP
+The second column shows the network hop, which replied to the probe. If is destination set by hostname or is used \-\-ptr, so it will be translated from IP to hostname.
+.PP
+The last column shows latency of actual hop in milliseconds or indicates error.
+.TP
+.BR *
+timeout has been exceeded
+.TP
+.BR H!
+host unreachale
+.TP
+.BR N!
+network unreachale
+.TP
+.BR P!
+protocol unreachale
+.TP
+.BR X!
+communication administratively prohibited
+.SH SEE ALSO
+\fBtraceroute\fR(8), \fBtraceroute6\fR(8), \fBping\fR(8), \fBping6\fR(8).
+.SH AUTHOR
+.PP
+Vaclav Martinka (xmarti76)
+.PP
+21. 04. 2017 FIT VUT
+.SH SECURITY
+No security issues
+.SH BUGS
+No known bugs
