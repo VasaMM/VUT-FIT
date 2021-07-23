@@ -1,0 +1,19 @@
+A---B---C
+|  /| \ |
+| / |  \|
+D---E---F
+
+
+A B
+A D
+B C
+B D
+B E
+B F
+C F
+D E
+E F
+
+
+
+

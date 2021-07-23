@@ -1,0 +1,14 @@
+A   B   C
+ \  |  /
+  \ | /
+    D
+  / | \
+ /  |  \
+E   F   G
+
+D A
+D B
+D C
+D E
+D F
+D G
