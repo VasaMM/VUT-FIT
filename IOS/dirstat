@@ -1,0 +1,206 @@
+#!/bin/sh
+
+#####################
+## Autor: xmarti76 ##
+## Name:  Proj1    ##
+#####################
+
+
+######## Funkce ########
+largest_file() {	#Největší soubor, parametr je přípona (tvar *.EXT)
+	if [ $# -eq 0 ]; then
+		echo `find $DIR -type f -ls | egrep $FILE_ERE $DOIT | sort -nr -k7 | head -n 1 | awk '{print $7}'`
+	elif [ $# -eq 1 ]; then
+		echo `find $DIR -type f -name "$1" -ls | egrep $FILE_ERE $DOIT | sort -nr -k7 | head -n 1 | awk '{print $7}'`
+	else
+		echo Error in largest_file, maybe bad arg?
+		exit 1
+	fi
+}
+
+
+total_size_and_median() #Součet velikostí a hledání mediánu, parametr je počet N a přípona (tvar *.EXT)
+{
+	# echo arg1: $1
+	# echo arg2: $2
+	if [ $# -eq 1 ]; then
+		all_sizes=`find $DIR -type f -ls | egrep $FILE_ERE $DOIT | sort -nr -k7 | awk '{print $7}'`
+	elif [ $# -eq 2 ]; then
+		all_sizes=`find $DIR -type f -name "$2" -ls | egrep $FILE_ERE $DOIT | sort -nr -k7 | awk '{print $7}'`
+	else
+		echo Error in total_size_and_median, maybe bad arg?
+		exit 1
+	fi
+	
+	counter=$1
+	total_size=0
+	#Příprava na medián
+	is_odd=$(($1%2))  
+	
+	while [ $counter -gt 0 ]; do
+		current_number=`echo $all_sizes | sed -re 's/(^[0-9]*).*/\1/'`
+		
+	#medián
+		if [ $is_odd -eq 1 ] && [ $counter -eq $(($1/2+1)) ]; then
+			median=$current_number
+		elif [ $is_odd -eq 0 ] && [ $counter -eq $(($1/2)) ]; then
+			median=$((($current_number + $(echo $all_sizes | sed -re 's/(^[0-9]*) ([0-9]*).*/\2/'))/2))
+		fi
+	#medián - konec
+		
+		total_size=$(($total_size+$current_number))
+		all_sizes=`echo $all_sizes | sed -re 's/(^[0-9]*) (.*)/\2/'`
+		counter=$(($counter-1))
+	done
+	
+	#vraci ;[součet velikostí];[medián]
+	echo ";$total_size;$median"
+}
+
+
+
+
+######## Zpracovani argumentů ########
+#echo args: $#
+if [ $# -eq 0 ]; then
+	DIR='.'	#aktualni adresar
+	FILE_ERE="\'.*\'"
+	DOIT=''
+elif [ $# -eq 1 ]; then
+	DIR=$1
+	FILE_ERE="\'.*\'"
+	DOIT=''
+elif [ $# -eq 2 ] && [ $1 == '-i' ]; then
+	DIR='.'
+	FILE_ERE=$2
+	DOIT='-v'
+elif [ $# -eq 3 ] && [ $1 == '-i' ]; then
+	DIR=$3
+	FILE_ERE=$2
+	DOIT='-v'
+elif [ $# -eq 3 ] && [ $2 == '-i' ]; then
+	DIR=$1
+	FILE_ERE=$3
+	DOIT='-v'
+else
+	echo "Bad arguments!"
+	exit 1
+fi
+
+
+#pocet slozek
+ND=$((`find $DIR -type d | egrep $FILE_ERE $DOIT | wc -l`-1))
+
+#Nejhlubší složka
+opravaDD=`echo "$DIR" | sed -re 's/[^/]*//g' | wc -L`
+DD=`find $DIR -type d | egrep $FILE_ERE $DOIT | sed -re 's/[^/]*//g' | wc -L`
+if [ `find $DIR -type f | egrep $FILE_ERE $DOIT | sed -re 's/[^/]*//g' | wc -l` -eq 1 ]; then
+	DD='1' #řeší složku bez podsložek
+else
+	DD=$(($DD-$opravaDD+2)) # 2 = 1 za nejhlubší a 1 ze nejvyšší (find nepíše / na konci)
+fi
+
+
+
+#Počet souborů
+NF=`find $DIR -type f | egrep $FILE_ERE $DOIT | wc -l | sed -re 's/[[:space:]]+//'` 
+
+
+#Nulový počet souborů
+if [ $NF -eq 0 ]; then
+	#Upravím $DIR
+	if [ $DIR == '.' ]; then
+		DIR = `pwd`
+	fi
+	#Rovnou tisknu
+	echo "Root directory: $DIR"
+	echo "Directories: $ND"
+	echo "Max depth: $DD"
+	echo "Average no. of files: 0"
+	echo "All files: 0"
+	echo "  Largest file: 'N/A'"
+	echo "  Average file size: 'N/A'"
+	echo "  File size median: 'N/A'"
+	echo "File extensions:"
+	
+else
+	#průměrný počet souborů na složku
+	if [ $ND -eq 0 ]; then
+		AF=$NF
+	else
+		AF=$(($NF / $ND))
+	fi
+	
+	#velikost největšího souboru
+	LF=`largest_file`
+	
+	
+	#Medián a půměrná velikost
+	size_med=`total_size_and_median $NF`
+	total_size=`echo $size_med | sed -re 's/.*;([0-9]*);[0-9]*$/\1/'`
+	MS=`echo $size_med | sed -re 's/.*;([0-9]*)$/\1/'`
+	
+	#Průměrná velikost
+	AS=$(($total_size/$NF))
+
+	#Seznam přípon
+	allEL=`find $DIR -type f | egrep $FILE_ERE $DOIT | egrep '.*\.([[:alnum:]]+)$' | egrep '.*/\..*' -v | sed -re 's/.*[^\/]\.([[:alnum:]]+)$/\1/' | sort`
+	
+
+	EL=`echo "$allEL" | uniq`
+	EL=`echo $EL | tr ' ' ','`
+	
+	if [ $DIR == '.' ]; then
+		DIR=`pwd`		
+	fi
+
+
+	#Tisk vysledku
+	#Upravím $DIR
+	if [ $DIR == '.' ]; then
+		DIR = `pwd`
+	fi
+	echo "Root directory: $DIR"
+	echo "Directories: $ND"
+	echo "Max depth: $DD"
+	echo "Average no. of files: $AF"
+	echo "All files: $NF"
+	echo "  Largest file: $LF"
+	echo "  Average file size: $AS"
+	echo "  File size median: $MS"
+	echo "File extensions: $EL"
+
+
+	#Práce s příponami
+	allEL=`echo "$allEL" | uniq -c | sed -re 's/$/,/' | sed -re 's/^ +//'`
+	countEL=`echo "$allEL" | wc -l`	
+
+	while [ $countEL -ge 1 ]; do
+		#Ořez seznamu přípon
+		NEXT=`echo $allEL | sed -re 's/(^[0-9]+).*/\1/'`
+		EXT=`echo $allEL | sed -re 's/^[0-9]+ ([[:alnum:]]*),.*/\1/'` 
+		allEL=`echo $allEL | sed -re 's/^[0-9]+ [[:alnum:]]*, (.*)/\1/'`
+
+		countEL=$(($countEL-1))
+		
+		#Nějvětší soubor
+		LEXT=`largest_file \*.$EXT`
+		
+		#Medián a půměrná velikost
+		size_med=`total_size_and_median $NEXT \*.$EXT`
+		total_size=`echo $size_med | sed -re 's/.*;([0-9]*);[0-9]*$/\1/'`
+		MEXT=`echo $size_med | sed -re 's/.*;([0-9]*)$/\1/'`
+		
+		#Průměrná velikost
+		AEXT=$(($total_size/$NEXT))
+			
+		
+		#Tisk
+		echo "Files .$EXT: $NEXT"
+		echo "  Largest file .$EXT: $LEXT"
+		echo "  Average file size .EXT: $AEXT"
+		echo "  File size median .EXT: $MEXT"
+	done
+	
+	exit 0
+fi
