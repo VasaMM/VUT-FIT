@@ -1,0 +1,70 @@
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# #                                                                                             # #
+# #                                         POP3 klient                                         # #
+# #                                                                                             # #
+# #     AUTOR: Václav Martinka                                                                  # #
+# #     LOGIN: xmarti76                                                                         # #
+# #            FIT VUT Brno                                                                     # #
+# #     DATUM: 17. 11. 2017                                                                     # #
+# #                                                                                             # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+Odevzdané soubory:
+    # client.cpp
+    # client.hpp
+    # error.hpp
+    # functions.cpp
+    # functions.hpp
+    # main.cpp
+    # Makefile
+    # manual.pdf
+    # options.cpp
+    # options.hpp
+    # README
+
+Popis:
+    Jednoduchý POP3 klient s podporou POP3S a STSL. Kromě stažení zpráv na serveru má podporu
+    stahování jen nových zpráv a volitelně nastavitelné mazání zpráv. Certifikáty pro ověření
+    komunikace lze použít jak systémové, tak lokální. Program umí o své činnosti podrobně
+    informovat, zobrazit jednoduchý progress bar nebo naopak být zcela potichu.
+
+Použití:
+    popcl [-h|--help] <server> [-p <port>] [-T|-S [-c <certfile>] [-C <certaddr>]] [-d] [-n]
+          -a <auth_file> -o <out_dir> [-b] [-v] [-q]
+
+    -h, –help   Zobrazí nápovědu a ukončí program. Ostatní parametry jsou ignorovány.     volitelný
+    <server>    Doménové jméno nebo IP adresa požadovaného zdroje.                        povinný
+    -p          Specifikuje číslo portu <port> na serveru. Není-li zadán, vybere se
+                výchozí port pro danou službu.                                            volitelný
+    -T          Zapíná šifrování celé komunikace (pop3s), pokud není parametr uveden
+                použije se nešifrovaná varianta protokolu.
+                Nelze kombinovat s parametrem -S.                                         volitelný
+    -S          Naváže nešifrované spojení se serverem a pomocí příkazu STLS přejde na
+                šifrovanou variantu protokolu. Nelze kombinovat s parametrem -T.          volitelný
+    -c          Definuje soubor <certfile> s certifikáty, který se použije pro ověření
+                platnosti certifikátu SSL/TLS předloženého serverem.
+                Lze použít jen s parametrem -T, nebo -S.                                  volitelný
+    -C          Určuje adresář <certaddr>, ve kterém se mají vyhledávat certifikáty,
+                použité pro ověření platnosti certifikátu SSL/TLS předloženého serverem.
+                Lze použít jen s parametrem -T, nebo -S.                                  volitelný
+    -d          Po stažení zpráv dojde k jejich vymazání na serveru                       volitelný
+    -n          Stáhne pouze nové zprávy. V kombinaci s -d maže pouze nové zprávy.        volitelný
+    -a          Určuje soubor <auth_file> pro autentizaci.                                povinný
+    -o          Určuje adresář <out_dir>, do kterého se budou stažené zprávy ukládat.     povinný
+    -b          Zobrazí jednoduchý progress bar informující o průběhu stahování.          volitelný
+    -v          Zapne zobrazování debugovacích výpisů, nevhodné kombinovat s -b.          volitelný
+    -q          Nezobrazí zcela nic (mimo chybových výpisů na stderr),
+                nevhodné kombinovat s -b a -v.                                            volitelný
+
+    Pokud není uveden parametr -c ani -C, pak se použije úložiště certifikátů získané funkcí
+    SSL_CTX_set_default_verify_paths()
+    Pořadí parametrů je libovolné.
+
+Příklad souboru auth_file:
+    username = isa2017.vut@seznam.cz
+    password = ISAVUTBR
+
+Příklad spuštění aplikace:
+    ./popcl pop3.seznam.cz -a auth_file -o ./out
