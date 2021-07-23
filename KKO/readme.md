@@ -1,0 +1,1 @@
+30 bodů z 30 + 4 bonusové (max 5)

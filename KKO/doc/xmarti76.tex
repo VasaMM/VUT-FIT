@@ -1,0 +1,76 @@
+%TODO Spustit program vlna
+\documentclass[11pt,a4paper,onecolumn,notitlepage]{article}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[text={17cm, 24cm},left=2cm,top=3cm]{geometry}
+\usepackage{graphicx}
+\usepackage{enumitem}
+
+% arg
+\providecommand{\argv}[2]{\texttt{-{}-#1} (\texttt{-#2})}
+
+
+
+\begin{document}
+	\begin{center}
+		\begin{figure}[hb]
+			\centering
+			\includegraphics{FIT.pdf}
+		\end{figure}
+	\vspace{\stretch{0.382}}
+	\LARGE
+	Kódování a komprese dat (KKO)\\
+	\Huge
+		Komprese obrazových dat s využitím statického a adaptivního Huffmanova kódování\\
+	\vspace{\stretch{0.618}}
+	\end{center}
+
+{\Large v~Brně \hfill Václav Martinka\\
+	\today \hfill xmarti76}
+
+\pagenumbering{gobble}
+
+\newpage
+
+\pagenumbering{arabic}
+
+
+
+\section{Zadání}
+	Cílem projektu je v programovacím jazyce C/C++ vytvořit aplikaci pro kompresi šedo tónových 	obrazových dat, kde se uplatní principy statického a adaptivního Huffmanova kódování. Vytvořené řešení musí být spustitelné coby tzv. konzolová aplikace (tedy z příkazového řádku) pod OS Linux v prostředí počítačové sítě FIT VUT v Brně.
+	
+\section{Rozbor problému}
+
+
+\section{Překlad a spuštění}
+	Program lze přeložit pomocí přiloženého \texttt{Makefile}, která obsahuje následující příkazy:
+	\begin{description}
+		\item[\texttt{all}] popř. pouze \texttt{make} přeloží program.
+		\item[\texttt{doc}] vygeneruje \emph{doxygen} dokumentaci.
+		\item[\texttt{zip}] vytvoří archiv se zdrojovými kódy
+		\item[\texttt{clean}] smaže soubory vzniklé při překladu.
+		\item[\texttt{test}] spustí testovací skript
+	\end{description}
+	
+	Chování programu lze ovlivnit pomocí následujících parametrů:
+	\begin{description}
+		\item[\argv{help}{h}] Zobrazí nápovědu a ukončí program
+		\item[\argv{compression}{c}] Vstupní soubor bude komprimován (výchozí režim)
+		\item[\argv{decompression}{d}] Vstupní soubor bude dekomprimován (nelez kombinovat s \texttt{--compression})
+		\item[\argv{model}{m}] Aktivuje model pro předzpracování vstupních dat. (Automaticky detekováno při dekompresi.)
+		\item[\argv{input {i}<file}] Vstupní soubor.
+		\item[\argv{output {o}<file}] Výstupní soubor. Výchozí je \texttt{out.raw}.
+		\item[\argv{verbous}{v}] Povolí vypisování informací o průběhu.
+		\item[\argv{quiet}{q}] Tichý režim, pouze výpisy na \texttt{stderr}.
+		\item[\argv{huffman}{h}\texttt{static}] Použe statické Huffmanovo kódování (výchozí).
+		\item[\argv{huffman}{h}\texttt{adaptive}] Použije dynamické Huffmanovo kódování. Nelze kombinovat se statickým kódováním, automaticky detekován při dekompresi.
+	\end{description}
+		
+\section{Závěr}
+
+	
+
+	
+\end{document}          
