@@ -1,0 +1,97 @@
+Architektura výpočetních systému (AVS 2019)
+Projekt č. 1 (ANN)
+Login: xmarti76
+
+U každého kroku proveďte měření vypočtu pro dataset dostupný na https://www.fit.vutbr.cz/~ibordovsky/avs/datasets/bigDataset.h5
+Správnost výpočtu můžete porovnat pomocí python 3 skriptu "Scripts/compareOutputs.py" s referenčním řešením.
+Pro bigDataset je dostupný na https://www.fit.vutbr.cz/~ibordovsky/avs/datasets/bigRefOutput.h5
+
+Krok 0: základní implementace
+=============================
+Celkový čas [s]:                        193 s
+Výkon skalárních operací [MFLOPS]:      68,84 MFLOPS
+Výkon vektorových operací [MFLOPS]:     1 155 MFLOPS
+L1 miss [%]:                            85 % (s ohledem na metodu měření bude reálná hodnota blízká 100 %)
+L2 miss [%]:                            99,9 %
+L3 miss [%]:                            0 %
+
+Které PAPI_EVENTS jste použili pro získání počtu výpadků v paměti?
+HW countery pro L1: PAPI_L1_DCM|PAPI_LD_INS|PAPI_SR_INS
+HW countery pro L2: PAPI_L2_DCM|PAPI_L2_DCA
+HW countery pro L3: PAPI_L3_TCM|PAPI_L3_TCA
+
+
+Krok 1: vektorizace funkcí
+===================================
+Celkový čas [s]:                        74 s
+Výkon skalárních operací [MFLOPS]:      0
+Výkon vektorových operací [MFLOPS]:     2 904 MFLOPS
+L1 miss [%]:                            9,3 %
+L2 miss [%]:                            99,6 %
+L3 miss [%]:                            0 %
+
+Jaké pragmy bylo potřeba přidat?
+- omp simd
+- omp declare simd
+Které dovětky k pragmám jste použili a jaky měly vliv na kompilátorem generované funkce? (main.cpp.optrpt/neuron.cpp.optrpt)
+- simdlen(32) - umožnilo načítat 32 hodnot zároveň. Sice AVX registry nejsou tak velké, ale díky jejich většímu množství to nevadí, použijí se dva a ušetří se na režii okolo.
+- linear - změnilo předávané hodnoty na vektory
+- uniform - nastavilo parametry na konstanty
+- notinbranch
+
+
+Krok 2: přístupy do paměti
+=============================
+a) S dovětky
+(Sepište všechyn použité dovětky):
+ - #pragma omp simd
+ - #pragma omp declare simd notinbranch uniform(inputSize, bias) simdlen(32) linear(input,weight)
+
+Celkový čas [s]:                        21,4 s
+Výkon skalárních operací [MFLOPS]:      290 MFLOPS
+Výkon vektorových operací [MFLOPS]:     9 789 MFLOPS
+L1 miss [%]:                            15,6 %
+L2 miss [%]:                            57,9 %
+L3 miss [%]:                            0 %
+
+b) Bez dovětků
+Některé dovětky maji negativní dopad na výkon, přestože kompilátor tvrdí opak. Které?
+ - Odstranění kteréhokoli z dovětků mělo buď žádný nebo negativní vliv na výkon.
+
+
+Krok 3.1: přesun #pragma omp simd
+===================================
+Celkový čas [s]:                        21,3 s
+Výkon skalárních operací [MFLOPS]:      292 MFLOPS
+Výkon vektorových operací [MFLOPS]:     9 836 MFLOPS
+L1 miss [%]:                            15,6 %
+L2 miss [%]:                            58,9 %
+L3 miss [%]:                            0 %
+
+Jaký dovětek je potřeba přidat?
+- reduction(+:output)
+
+Krok 3.2: vykonání po vrstvách místo po obrázcích
+===================================
+Celkový čas [s]:                        21,8 s
+Výkon skalárních operací [MFLOPS]:      296 MFLOPS
+Výkon vektorových operací [MFLOPS]:     9 985 MFLOPS
+L1 miss [%]:                            14,3 %
+L2 miss [%]:                            56,2 %
+L3 miss [%]:                            0,2 %
+
+Popište, jaký dopad na výkon mají výpadky v cache.
+- Výpadky v cachi mají poměrně vysoký vliv  na výkon, bohužel daná úprava kódu se na výkonu nijak neprojevila... Zřejmě kvůli potřebě většího množství paměti pro uchování mezivýsledků, která taktéž generuje cachemiss.
+
+Krok 4: režie funkcí, zarovnání paměti
+===================================
+Celkový čas [s]:                        20 s
+Výkon skalárních operací [MFLOPS]:      16 MFLOPS
+Výkon vektorových operací [MFLOPS]:     13 304 MFLOPS
+L1 miss [%]:                            24,5 %
+L2 miss [%]:                            61,8 %
+L3 miss [%]:                            0,2 %
+
+Proč není zrychlení již výrazné? Na jaké typy problémů cílí tyto optimalizace?
+- Zarovnání cíí na rychlejší přístup k datům do paměti, naopak inlinování funkce sníží režii nutnou k volání (přístup na zásobník, tedy opět práci s cache).
+- Ke zrychení pomohla nižší režie přístupu k datům díky zarovnání, a snížení počtu přístupů do paměti na polovinu. Protože počet výpadků zůsta přibližně stejný, došlo tak ke zvýšení miss rate.

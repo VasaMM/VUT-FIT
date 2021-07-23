@@ -1,0 +1,65 @@
+Architektury Výpočetních Systémů (AVS 2019)
+Projekt č. 2 (PMC)
+Login: xmarti76
+
+Úloha 1: Paralelizace původního řešení
+===============================================================================
+
+1) Kterou ze smyček (viz zadání) je vhodnější paralelizovat a co způsobuje 
+   neefektivitu paralelizaci té druhé?
+   - vnější (marchCubes) - paralelizujeme vždy tu nejvíce vnější smyčku
+   - vnitřní smyčka je příliš jednoduchá na paralelizaci a režie spojená s vytvářením vláken (může dojít pouze k uspávání)
+     a rozdělováním práce mezi ně je natolik vysoká, že dojde ke zpomalení výpočtu
+
+2) Jaké plánování (rozdělení práce mezi vlákna) jste zvolili a proč? 
+   Jaký vliv má velikost "chunk" při dynamickém plánování (8, 16, 32, 64)?
+   - statické:32 - vyžaduje nejmenší režii
+                 - vhodné po stejně náročné iterace - splněno
+   - určuje množství přidelěnách iterací jednou vláknu - čím větší, tím méně režie, ale zároveň hrozí,
+     že jendotlivá vlákna nebudou vyvážená
+
+
+3) Jakým způsobem zajišťujete ukládání trojúhelníků z několika vláken současně?
+   - pomocí kritické sekce
+
+
+Úloha 2: Paralelní průchod stromem
+===============================================================================
+
+1) Stručně popište použití OpenMP tasků ve vašem řešení.
+   1. na začátku je vytvořen jeden task pro celou krychli
+   2. zkontroluje se, zda obsahuje nějaké body
+   3. pak se rozdělí na 8 nových tasků
+   4. pokracuje se do bodu 2, dokud není hrana krychle rovna 1
+
+2) Jakým způsobem jste realizovali sesbírání celkového počtu trojúhelníků?
+   - pomocí atomického přístupu
+
+3) Jaký vliv má na vaše řešení tzv. "cut-off"? Je vhodné vytvářet nový 
+   task pro každou krychli na nejnižší úrovni?
+   - teoreticky by nemělo být, ale ukázalo se to jako rychlejší než naivní implementace cut-off
+
+4) Jakým způsobem zajišťujete ukládání trojúhelníků z několika vláken současně?
+   - pomocí kritické sekce
+
+
+Úloha 2: Grafy škálování obou řešení
+===============================================================================
+
+1) Stručně zhodnoťte efektivitu vytvořených řešení (na základě grafů škálování).
+   - pro přesnější zhodnocení výsledků by bylo vhodné provést více měření na větší škále dat
+   - graf grid_scaling znázorňuje, že čas roste kubicky se zvětšující se úlohou (která také ruste kubicky),
+     což je ideální výsledek
+   - graf silného škálování ukazuje, že octree škáluje špatně - počet vláken nemá vliv na dobu zpracování,
+     loop škáluje lépe, počet vláken snižuje čas výpočtu
+   - graf slabého škálování také nevypadá v případě octree podle očekávání - čas roste s počtem vláken, což je chybné,
+     loop škáluje správně
+
+2) V jakém případě (v závislosti na počtu bodů ve vstupním souboru a velikosti 
+   mřížky) bude vaše řešení 1. úlohy neefektivní? (pokud takový případ existuje)
+   - octree s více jak jedním vláknem
+   - loop s více jak 8 jádry
+
+3) Je (nebo není) stromový algoritmus efektivnější z pohledu slabého škálování 
+   vzhledem ke vstupu?
+   - v mém případě ne
