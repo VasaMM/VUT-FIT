@@ -1,0 +1,163 @@
+/*************************
+ ******** Hlavicka *******
+ ************************/
+.top {
+	background-image: linear-gradient(to bottom, #003da6 0.3em, #0080ec 1.5em, #009fed 1.7em, #444 1.7em, #232323 100%);
+	user-select: none;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+header {
+	position: relative;
+	/*padding: 2em 0 1em 2em;*/
+	padding: 1em 0 0.5em;
+	font-size: 200%;
+	text-shadow:  2px 1px 2px #666;
+	width: 40%;
+}
+
+header .logo {
+	color: #ece400;
+	display: block;
+	text-align: right;
+}
+
+header a:hover {
+	color: #ece400;
+}
+
+
+
+/*************************
+ ******** Navigace *******
+ ************************/
+#main-menu {
+	position: absolute;
+		top: 8em;
+		left: 45%;
+}
+
+#main-menu > ul {
+	position: relative;
+	padding: 0;
+	margin: 0;
+}
+
+#main-menu li {
+	position: relative;
+	display: inline-block;
+	list-style: none;
+}
+
+#main-menu a {
+	color: #eee;
+	display: block;
+	text-align: left;
+	padding: 10px;
+	font-weight: bold;
+	text-transform: uppercase;
+	border: 3px solid #003da6;
+	border-radius: 10px;
+	background-color: #009fed;
+	background-image: linear-gradient(to bottom, #003da6 0%, #0080ec 30%, #009fed 100%);
+	/*transition: font-size .3s linear;*/
+}
+
+#main-menu a:hover {
+	/*font-size: 120%;
+	transition: font-size .2s linear;*/
+	text-decoration: underline;
+}
+
+#main-menu > ul > li {
+	transition: bottom .2s linear;
+	position: relative;
+		bottom: 0;
+}
+
+#main-menu > ul > li:hover {
+	bottom: 5px;
+	transition: bottom .2s linear;
+}
+
+#main-menu .active a {
+	/*background-image: linear-gradient(to bottom, #002d96 0%, #0070dc 30%, #008fdd 100%);*/
+	background-color: #003da6;
+	background-image: none;
+}
+
+#main-menu li:hover a, #main-menuu li:hover li a {
+	background: none;
+}
+
+#main-menu > ul ul li {
+	display: block;
+}
+
+#main-menu > ul > li:hover > a {
+	color: white;
+	background: #0080ec;
+	background-image: linear-gradient(to top, #003da6 0%, #0080ec 70%, #009fed 100%);
+	/*background-image: linear-gradient(to bottom, #0a3da6 0%, #0080ec 30%, #009fed 100%);*/
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+#main-menu > ul > li:hover > a {
+	padding-bottom: 25px;  /*20px*/
+}
+
+#main-menu > ul ul a:hover {
+	color: yellow !important;
+}
+
+#main-menu li:hover > ul {
+	visibility: visible;
+}
+
+#main-menu > ul ul {
+	background: #003da6;
+	padding-left: 0;
+	visibility: hidden;
+	white-space: nowrap;
+	position: absolute;
+		top: calc(34px + 1em);
+		left: 0;
+	z-index: 1;
+	border: 3px solid #003da6;
+	border-radius: 10px;
+	border-top-left-radius: 0;
+}
+
+#main-menu > ul ul a {
+	padding: 10px 15px 10px 15px;
+	color: #ece400 !important;
+}
+
+#main-menu .onlychild:hover {
+	padding-bottom: 10px !important;
+	border-bottom-left-radius: 10px !important;
+	border-bottom-right-radius: 10px !important;
+}
+
+#main-menu .onlychild {
+	padding-bottom: 10px !important;
+	border-bottom-left-radius: 10px !important;
+	border-bottom-right-radius: 10px !important;
+}
+
+#main-menu .onlychild {
+	margin-right: 5px;
+}
+
+#menu-btn {
+	display: none;
+	position: absolute;
+		top: 2.5em;
+		right: 1em;
+	width: 3em;
+	height: 3em;
+	z-index: 2;
+}
