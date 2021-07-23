@@ -1,0 +1,30 @@
+#################################
+## Václav Martinka (xmarti76)  ##
+## 06. 05. 2019 FIT VUT Brno   ##
+## Projekt 2 - ARC             ##
+#################################
+
+
+* 1. Porovnání sériového a paralelního I/O
+-------------------------------------------
+ - Pralalelní I/O se mi nepodařilo implementovat
+ - Odhaduji, že s častějším zápisem na disk poroste výhoda paralelního zápisu
+
+
+* 2. Nastavení souborového systému
+----------------------------------
+ - Viz bod 1
+ - Použito výchozí nastavení
+
+
+* 3. Hybridní verze vs MPI vs OpenMP
+------------------------------------
+ - Implementace obsahuje chyby, proto nelze porovnat
+
+
+* 4. Allinea Performance Reports
+--------------------------------
+ - S rostoucím počtem procesů roste komunikace,
+   např. pro 64 procesů, malou doménu dat o hraně 256 a pouhých 100 iterací zabere MPI komunikace 90 % času,
+   přičemž samotný výpočet zabere pouhé 2 %. Tudíž větší počet procesů je výhodný pouze pro velké domény a vyšší počet iterací.
+ - Druhou významnou "brzdou" je zde sekvenční zápis, tudíž vyšší hodnota w znamená častější I/O operace na úkor výpočtu (a v mém případě i další MPI kokunikaci).

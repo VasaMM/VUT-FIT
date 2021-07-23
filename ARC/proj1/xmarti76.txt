@@ -1,0 +1,33 @@
+Dokumentace k prvnímu projektu z předmětu ARC
+=============================================
+
+**Autor:** Václav Martinka (xmarti76), FIT VUTBR
+**Datum:** 01. 04. 2019
+
+
+Poznámky ke zdrojovým souborům
+------------------------------
+Všechny úpravy ve zdrojovém souboru jsou označeny komentářem začínajícím řetězcem `\\ NOTE` a popisují jednotlivé _OMP_ pragmy.
+
+
+Poznámky ke grafům
+------------------
+Výsledky měření korespondují s Amdahlovým zákonem. Zrychlení roste s počtem jader, ovšem tento růst není zdaleka lineární a od určitého počtu jader, kdy je dosaženo maxima, naopak dochází k poklesu výkonu (i pod sekvenční verzi) vlivem režie.
+
+Grafy jsou na pravém konci osy _X_ mírně zkreslené, jelikož Salomon je vybaven pouze 24 jádry na uzel a ne 32, tudíž není dodrženo logaritmické měřítko.
+Pro každou paralelní implementaci jsem vytvořil trojici grafů reprezentující závislost doby výpočtu na počtu jader, zrychlení a efektivitu. Níže uvádím několik konkrétních poznámek:
+  * **PAR1 zrychlení**
+    Je zde dobře vidět, že pro malý počet vstupních dat (64), nedochází k žádnému zrychlení, naopak vlivem režie s rostoucím počtem jader klesá výkon.
+  * **PAR1 efektivita**
+    Pro velké domény dat zde bylo při dvou jádrech dosažené efektivity větší než 1. Předpokládám, že důvodem bude nízká režie pro řízení 2 vláken a využití vektorizace,
+
+  * **PAR2**
+    Oproti _PAR1_ zde bylo dosaženo nižšího maximálního zrychlení (8 vs 4) a pro malé domény (pod 512) ani ke zrychlení nedošlo. Na vině bude zřejmě vyšší režie spojená s vytvářením a řízením tasků.
+
+  * **PAR3**
+    Díky překrytí výpočtu se zápisem na disk vznikly zajímavější grafy. Na všech třech grafech je dobře vidět chvíle, kdy se doba výpočtu protne s dobou nutnou k zápisu dat a dojde tak k razantnímu zpomalení programu vlivem čekání na zápis dat.
+
+
+Odpověď na otázku
+-----------------
+K zjištění odpovědi jsem si vybral doménu o velikosti 1024, 10000 iterací a 24 vláken. Iterativně jsem snižoval intenzitu zápisu od hodnoty 100 po hodotu 10 a došel jsem k závěru, že k překrytí výpočtu se zápisem dojde v tomot případě okolo intenzity 18. Měření je zaznamenáno na grafu _odpoved_.
