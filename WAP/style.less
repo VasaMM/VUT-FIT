@@ -1,0 +1,211 @@
+////////////////////////////////////////
+// UZIVATELSKY DEFINOVATELNE PROMENNE //
+////////////////////////////////////////
+
+// Sirka a barva ramecku
+@window-border-width: 3px;
+@window-border-color: #3f51b5;
+
+// Vyska a barva title
+@window-title-height: 30px;
+@window-title-color: #03A9F4;
+
+// Styl .desktop
+@desktop-border-width: 3px;
+@desktop-border-color: #757575;
+@desktop-background: #dcdcdc;	// Libovolny background, nejenom barva
+
+
+
+// Vypocet dalsich promennych - NEMENIT
+@window-border-width-oposite: calc(100% - @window-border-width);
+@window-title-icon-height: @window-title-height * 0.7;
+
+
+.no-select {
+	-webkit-touch-callout: none;
+	  -webkit-user-select: none;
+	   -khtml-user-select: none;
+	     -moz-user-select: none;
+	      -ms-user-select: none;
+	          user-select: none;
+}
+
+body {
+	margin: 0;
+}
+
+.desktop {
+	border-width: @desktop-border-width;
+	border-style: solid;
+	border-color: @desktop-border-color;
+	position: relative;
+	background: @desktop-background;
+
+	& > .window {
+		position: absolute;
+		display: none;
+
+		.border {
+			display: block;
+			position: absolute;
+			background: @window-border-color;
+			.no-select;
+
+
+			&.left-top {
+				top:    0;
+				right:  @window-border-width-oposite;
+				bottom: @window-border-width-oposite;
+				left:   0;
+				cursor: nwse-resize;
+			}
+
+			&.top {
+				top:    0;
+				right:  @window-border-width;
+				bottom: @window-border-width-oposite;
+				left:   @window-border-width;
+				cursor: ns-resize;
+			}
+
+			&.right-top {
+				top:    0;
+				right:  0;
+				left:   @window-border-width-oposite;
+				bottom: @window-border-width-oposite;
+				cursor: nesw-resize;
+			}
+
+			&.left {
+				top:    @window-border-width;
+				right:  @window-border-width-oposite;
+				bottom: @window-border-width;
+				left:   0;
+				cursor: ew-resize;
+			}
+
+			&.right {
+				top:    @window-border-width;
+				right:  0;
+				left:   @window-border-width-oposite;
+				bottom: @window-border-width;
+				cursor: ew-resize;
+			}
+
+			&.left-bottom {
+				top:    @window-border-width-oposite;
+				right:  @window-border-width-oposite;
+				bottom: 0;
+				left:   0;
+				cursor: nesw-resize;
+			}
+
+			&.bottom {
+				top:    @window-border-width-oposite;
+				right:  @window-border-width;
+				bottom: 0;
+				left:   @window-border-width;
+				cursor: ns-resize;
+			}
+
+			&.right-bottom {
+				top:    @window-border-width-oposite;
+				right:  0;
+				bottom: 0;
+				left:   @window-border-width-oposite;
+				cursor: nwse-resize;
+			}
+
+			&.title {
+				left:   @window-border-width;
+				right:   @window-border-width;
+				top:   @window-border-width;
+				bottom:  calc( 100% - @window-border-width - @window-title-height );
+				background: @window-title-color;
+				touch-action: manipulation;
+
+				.icon {
+					width:  @window-title-height * (2 / 3);
+					height: @window-title-height * (2 / 3);
+
+					position: absolute;
+						top:  @window-title-height * (1 / 6);
+						left: @window-title-height * (1 / 6);
+				}
+
+				.move {
+					display: block;
+					height: 100%;
+					cursor: move;
+					white-space: nowrap;
+					overflow: hidden;
+					position: absolute;
+						left: @window-title-height / 3;
+						right: @window-title-height * 2.2;
+					line-height: @window-title-height;
+					font-weight: bold;
+					font-family: sans-serif;
+
+					&.grabbing {
+						cursor: grabbing!important;
+					}
+
+					&:after {
+						content: "";
+						width: 1em;
+						height: 100%;
+						position: absolute;
+							top:   0;
+							right: 0;
+
+						background: @window-title-color;
+						background: -moz-linear-gradient(    left, transparent 0%, @window-title-color 100% );
+						background: -webkit-linear-gradient( left, transparent 0%, @window-title-color 100% );
+						background: linear-gradient(     to right, transparent 0%, @window-title-color 100% );
+					}
+				}
+
+				.icon + .move {
+					left: @window-title-height;
+				}
+
+				.fa {
+					float: right;
+					cursor: pointer;
+					margin: ( @window-title-height - @window-title-icon-height - 2px ) / 2;   // 2px = border
+				}
+
+				.fa:before {
+					border: 1px solid black;
+					border-radius: 20%;
+
+					display: block;
+					height: @window-title-icon-height;
+					width:  @window-title-icon-height;
+					line-height:  @window-title-icon-height;
+					text-align: center;
+				}
+			}
+
+		}
+
+		&[data-maximize="true"] .move,
+		&[data-maximize="true"] .border {
+			cursor: default!important;
+		}
+
+		.wrap {
+			position: absolute;
+				top: @window-border-width + @window-title-height;
+				left: @window-border-width;
+				right: @window-border-width;
+				bottom: @window-border-width;
+
+			background: #eee;
+			overflow: auto;
+			padding: 10px;
+		}
+	}
+}
+

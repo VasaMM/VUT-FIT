@@ -1,0 +1,163 @@
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+body {
+  margin: 0;
+}
+.desktop {
+  border-width: 3px;
+  border-style: solid;
+  border-color: #757575;
+  position: relative;
+  background: #dcdcdc;
+}
+.desktop > .window {
+  position: absolute;
+  display: none;
+}
+.desktop > .window .border {
+  display: block;
+  position: absolute;
+  background: #3f51b5;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.desktop > .window .border.left-top {
+  top: 0;
+  right: calc(100% - 3px);
+  bottom: calc(100% - 3px);
+  left: 0;
+  cursor: nwse-resize;
+}
+.desktop > .window .border.top {
+  top: 0;
+  right: 3px;
+  bottom: calc(100% - 3px);
+  left: 3px;
+  cursor: ns-resize;
+}
+.desktop > .window .border.right-top {
+  top: 0;
+  right: 0;
+  left: calc(100% - 3px);
+  bottom: calc(100% - 3px);
+  cursor: nesw-resize;
+}
+.desktop > .window .border.left {
+  top: 3px;
+  right: calc(100% - 3px);
+  bottom: 3px;
+  left: 0;
+  cursor: ew-resize;
+}
+.desktop > .window .border.right {
+  top: 3px;
+  right: 0;
+  left: calc(100% - 3px);
+  bottom: 3px;
+  cursor: ew-resize;
+}
+.desktop > .window .border.left-bottom {
+  top: calc(100% - 3px);
+  right: calc(100% - 3px);
+  bottom: 0;
+  left: 0;
+  cursor: nesw-resize;
+}
+.desktop > .window .border.bottom {
+  top: calc(100% - 3px);
+  right: 3px;
+  bottom: 0;
+  left: 3px;
+  cursor: ns-resize;
+}
+.desktop > .window .border.right-bottom {
+  top: calc(100% - 3px);
+  right: 0;
+  bottom: 0;
+  left: calc(100% - 3px);
+  cursor: nwse-resize;
+}
+.desktop > .window .border.title {
+  left: 3px;
+  right: 3px;
+  top: 3px;
+  bottom: calc(100% - 3px - 30px);
+  background: #03A9F4;
+  touch-action: manipulation;
+}
+.desktop > .window .border.title .icon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+.desktop > .window .border.title .move {
+  display: block;
+  height: 100%;
+  cursor: move;
+  white-space: nowrap;
+  overflow: hidden;
+  position: absolute;
+  left: 10px;
+  right: 66px;
+  line-height: 30px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+.desktop > .window .border.title .move.grabbing {
+  cursor: grabbing!important;
+}
+.desktop > .window .border.title .move:after {
+  content: "";
+  width: 1em;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #03A9F4;
+  background: -moz-linear-gradient(left, transparent 0%, #03A9F4 100%);
+  background: -webkit-linear-gradient(left, transparent 0%, #03A9F4 100%);
+  background: linear-gradient(to right, transparent 0%, #03A9F4 100%);
+}
+.desktop > .window .border.title .icon + .move {
+  left: 30px;
+}
+.desktop > .window .border.title .fa {
+  float: right;
+  cursor: pointer;
+  margin: 3.5px;
+}
+.desktop > .window .border.title .fa:before {
+  border: 1px solid black;
+  border-radius: 20%;
+  display: block;
+  height: 21px;
+  width: 21px;
+  line-height: 21px;
+  text-align: center;
+}
+.desktop > .window[data-maximize="true"] .move,
+.desktop > .window[data-maximize="true"] .border {
+  cursor: default!important;
+}
+.desktop > .window .wrap {
+  position: absolute;
+  top: 33px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  background: #eee;
+  overflow: auto;
+  padding: 10px;
+}

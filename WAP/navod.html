@@ -1,0 +1,71 @@
+<!--------------------------
+ - Author: Václav Martinka
+ - About: Projekt do predmetu WAP, FIT VUTBR 2019
+ - License: CC BY-SA 2.0
+ ---------------------------->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Návod</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<h1>Návod</h1>
+	<h2>Instalace</h2>
+		<h3>Styl</h3>
+		<p>
+			Vzhled pro styl byl vytvořen pomocí rozšíření <em>Less</em>. Chcete-li použít přímo tento styl, je nutné zajistit jeho překlad do čistého CSS.
+
+			Nejjednodušší řešení je překlad na straně klienta a to přidáním následujících dvou řádků do hlavičky:<br>
+			<em>&lt;script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"&gt;&lt;/script&gt;</em>.<br>
+			<em>&lt;link rel="stylesheet/less" type="text/css" href="style.less"&gt;</em>
+			<br>
+			Použití skriptu <em>less</em> je detekováno a nejdříve se čeká na vygenerování vzhledu, aby se předešlo možným chybám.
+			<br>
+			Je nutné si uvědomit, že překlad probíhá při každém načtení stránky a na pomalejších zařízeních může zbytečně zpomalovat načtění stránky, proto je toto řešení vhodné především pro testování.
+			<br>
+			Vhodnějším a (z pohledu uživatele) rychlejším řešením je vložit již přeložený styl např. pomocí <em>&lt;link rel="stylesheet" type="text/css" href="style.css"&gt;</em>.
+		</p>
+		<p>
+			V souboru style.less je možné provést určité přizpůsobení vzhledu (barev a rozměrů). Viz první řádky v souboru <em>style.less</em>.
+		</p>
+
+		<h3>Skript</h3>
+		<p>
+			Skript je nutné připojit do html hlavičky příkazem <em>&lt;script src="./desktop.js" >&lt;/script&gt;</em>. Dále je potřeba ho aktivovat příkazem <em>desktop()</em>. To lze provést kdekoli v dokumentu, např. přidáním následujícího kódu do html hlavičky <em>&lt;script&gt; desktop(); &lt;/script&gt;</em>
+		</p>
+
+	<h2>Použití</h2>
+	<p>
+		Skript vyhledá všechny elementy s třídou <em>desktop</em>. Těch může být v souboru libovolné množství. Je vhodné těmto elementům nastavit rozměr minimálně 200px x 200px. Mimo to lze element <em>desktop</em> doplnit prakticky o libovolný vzhled.
+	</p>
+	<p>
+		V rámci elementu <em>desktop</em> lze definovat elementy <em>window</em> s libovolným obsahem. Ty se posléze chovají jako okna (lze je přesouvat, měnit jejich velikost, apod.). Vlastnosti jednotlivých oken lze ovlivni pomocí atributů a to následujících:
+		<ul>
+			<li><strong>title:</strong> titulek zobrazený v záhlaví okna</li>
+			<li><strong>height:</strong> výška okna v pixelech</li>
+			<li><strong>width:</strong> šířka okna v pixelech</li>
+			<li><strong>data-icon:</strong> adresa obrázku který se zobrazí jako ikona okna</li>
+			<li><strong>data-maximize:</strong> hodnota <em>true</em> způsobí maximalizaci okna</li>
+			<li><strong>data-top:</strong> pozice okna na ose y v pixelech (0 je nahoře)</li>
+			<li><strong>data-left:</strong> pozice okna na ose x v pixelech (0 je vlevo)</li>
+		</ul>
+
+		Všechny tyto atributy jsou volitelné. Příklad použítí: <em>&lt;div class="window" title="Lorem ipsum" height="300px" width="600px" data-icon="icon1.png" data-left="500px" data-top="250px"&gt;</em>
+	</p>
+	<p>
+		Obsahem okna může být i další element <em>desktop</em> (i když lze polemizovat o praktickém využití), popř. element <em>window</em>, <strong>POZOR</strong> v tomto případě (element <em>window</em> vnořený v rámci jiného elementu <em>window</em>) na něj neplatí výše uvedená pravidla!
+		<br>
+		V případě, že je obsahem okna <em>iframe</em>, dojde při každé manipulaci s oknem k jeho znovunačtení.
+		<br>
+		Jakýkoli jiný obsha by neměl způsobovat problémy.
+	</p>
+
+	<footer>
+		<strong>Autor:</strong> Václav Martinka (xmarti76)<br>
+		<strong>Licence:</strong> License: CC BY-SA 2.0<br>
+		Projekt do předmětu WAP, FIT VUTBR 2019
+	</footer>
+</body>
+</html>
