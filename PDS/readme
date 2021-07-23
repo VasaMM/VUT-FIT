@@ -1,0 +1,34 @@
+AUTOR: Václav Martinka (xmarti76)
+21. 04. 2019
+FIT VUT BRNO
+ 
+
+# Překlad
+ - Není potřeba žádných dodatečných knihoven
+   pouze zavolat 'make'
+
+
+* Spuštění
+ - Odpovídá zadání
+ - '-h' nebo '--help' zobrazí nápovědu
+
+
+# Rozšíření
+ - Peer i node navíc obsahují parametr '-v' '--verbous' pro výpis ladících informací
+ - Oba programy (peer i node) lze ovládat také pomocí standartního vstupu
+   Příkazy musí být začínat znakem \ a jsou ukončeny novým řádkem (např. \help)
+   Seznam příkazů odpovídá příkazům RPC, navíc je přidán výše zmíněný help pro nápovědu a quit pro ukončení programu
+   Kromě toho lze použít i jednopísmenkovou variantu, která u většiny příkazů vychází z jejich prvního písmene (např. \q místo \quit)
+   Pokud příkaz přijímá i další parametry, jsou od sebe odděleny jednou mezerou, např. zpráva se odešle příkazem \message from to <Text zprávy>
+ - RPC program byl doplněn také o nápovědu (-h --help) a výše zmíněný příkaz quit pro vzdálené ukončení peera či noda
+   Mimo to obsahuje i jednopísmenkové zkratky parametrů (viz jeho nápověda)
+ - Všechny zdrojové kódy jsou dokumentovány pomocí Doxygen komentářů
+
+
+# Testování
+ - Lucie Pelantová (xpelan04), python
+ - Jiří Matějka (xmatej52), python
+ - Jiří Kyzlink (xkyzli02), neznámé (adresa nalezena na fóru)
+ - Jan Hammer (xhamme00), neznámé (adresa nalezena na fóru)
+ - Bežící instance z merlina, převážně python
+ - Různí boti na merlinovy, zřejmě python
