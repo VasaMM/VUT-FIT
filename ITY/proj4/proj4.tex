@@ -1,0 +1,87 @@
+\documentclass[11pt,a4paper,onecolumn,notitlepage]{article}
+\usepackage[czech]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[text={17cm, 24cm},left=2cm,top=3cm]{geometry}
+%\usepackage[T1]{fontenc}
+\usepackage{times}
+
+
+\begin{document}
+  \begin{center}
+  \Huge
+  \textsc{Vysoké uèení technické v~Brnì\\
+  \huge
+  Fakulta informaèních technologií}\\
+  \vspace{\stretch{0.382}}
+  \LARGE
+  Typografie a publikování -- 4. projekt\\
+  \Huge
+  Èasté typografické chyby\\
+  \vspace{\stretch{0.618}}
+  \end{center}
+    {\Large \today \hfill
+  Václav Martinka}
+  \pagenumbering{gobble}
+  \newpage
+
+\pagenumbering{arabic}
+\section{Interpunkce}
+
+  Velmi èastou chybou je nesprávné používání mezer u~interpunkèních znamének, jako jsou teèky,
+  èárky, otazníky, vykøièníky a samozøejmì i u~dalších. Pøed tyto znaménka se \textbf{nikdy} nepíše
+  mezera, zatímco za nì ano.
+    \cite{Bak_Typ_v_cas, PPC_Zaklady_formatovani}
+  
+  \subsection{Výpustek (tøi teèky)}
+    Výpustek slouží k~nahrazení nevysloveného textu.  Teèky jsou vždy jen tøi a žádný jiný poèet
+    není dovolen.
+    \begin{quote}
+	    Pokud výpustkem vìta konèí, další (ètvrtá) teèka se již nepíše. \cite{Wiki_Typo_rady}
+    \end{quote}
+    Aplikace \emph{Microsoft Word} automaticky zamìòuje ... za \dots , v~prostøedí \LaTeX\ využijeme
+    \verb|\dots|.
+      \cite{CHIP_Word_zkratky}
+
+  \subsection{Pomlèky vs spojovníky}
+    Pomlèka a spojovník bývá èasto zamìòován. Spojovník \textbf{-}, tedy symbol na klávesnici se
+    používá pro spojení slov. Napø. pøi rozdìlení na konci øádku.
+      \cite{Zahadna_typo_Nej_chyby}\\
+    Pomlèka \textbf{--} se používá napø. pøi uvádìní rozsahu èísel. V~\LaTeX u ji napíšeme pøíkazem
+    \verb|--|.
+      \cite{Wiki_Typo_rady, LaTeX_Kottwitz}
+
+  \subsection{Mezislovní mezery}
+    Pod pojmem mezislovní mezera rozumíme vzdálenost mezi slovy \emph{wordspacing}. Standardnì je
+    to tøetina ètverèíku. Maximální mezislovní mezera mùže být pùlètverèík, tedy 150\%. Èastou chybou
+    je, zvìtšení mezery pomocí nìkolika úhozù do mezerníku, což samozøejmì není správné øešení.
+      \cite{Typografia}
+
+  \subsection{Uvozovky}
+    Dalším èastým kamenem úrazu jsou uvozovky. Spousta èlánkù obsahuje chybné anglické uvozovky
+    místo èeských. Bohužel, skuteèné èeské uvozovky
+    \Large \quotedblbase \textquotedblleft \normalsize\ na klávesnici nenajdete. Jsou tu pouze
+    anglické \Large``''\normalsize. Opìt nám zde pomùže \emph{Microsoft Word}, který se o~správné
+    uvozovky postará sám. Pokud používáte \LaTeX, je nutné použít \verb|\uv{}|.
+      \cite{LaTeX_Rybicka, Bak_Pravidla_CZ_typ}
+  
+
+\section{Psaní èísel}
+  \subsection{Desetinná teèka nebo èárka?}
+    V~èeštinì používáme na rozdíl od jiných zemí desetinnou èárku, tedy $15,3$ a ne $15.3$. Okolo
+    desetinné èárky (ale i teèky) se mezery nepíší. U~vìtších èísel se èíslice shlukují do trojic
+    a to i v~desetinné èásti. Pro jejich oddìlení se používá nedìlitelná mezera.
+    V~\emph{Microsoft Word} jí dosáhneme pomocí klávesové zkratky \texttt{Ctrl + Shift + mezerník},
+    \LaTeX\ používá znak \Large \verb|~| \normalsize.
+	  \cite{LaTeX_Kottwitz, Wiki_Typo_rady, CHIP_Word_zkratky}
+
+  \subsection{Jak na cenovky}
+    Platí zde obecná pravidla pro psaní èísel, tedy používání desetinné èárky a shlukování
+    do trojic. Za èíslo se buï uvede mìna, napø. \emph{Kè} nebo, pokud je z~kontextu jasné, o~jakou
+    mìnu se jedná, tak lze použít i \emph{,-}. Ale nikde ne dohromady.
+      \cite{Typo_PC_Nej_chyby}
+
+\newpage
+  \bibliographystyle{czplain}
+  \bibliography{proj4}
+
+\end{document}
