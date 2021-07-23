@@ -1,0 +1,633 @@
+\documentclass[11pt,a4paper,oneside]{article}
+\usepackage[czech]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage{graphicx}
+\usepackage[a4paper,left=25mm,right=25mm,top=25mm,bottom=25mm]{geometry}
+%\usepackage{tikz}
+%\usepackage{amsmath}
+\usepackage{epstopdf}
+
+
+
+\begin{document}
+
+\begin{figure}[hb]
+\centering
+\includegraphics{FIT.eps}
+\label{fig:FIT}
+\end{figure}
+
+\begin{center}
+\ 
+\\[150pt]
+\Huge
+\textbf{Semestrální projekt}\\
+\Large
+Elektronika pro informaèní technologie 2015/2016	
+\\[320pt]
+\large
+\begin{tabular}{r@{: }lp{6cm}r}
+Jméno & Václav Martinka && Olomouc, 20.12.2015\\
+Login & xmarti76\\
+ID & 187169
+\end{tabular}
+\normalsize
+\end{center}
+\pagenumbering{gobble}
+
+\newpage
+\tableofcontents
+\pagenumbering{arabic}
+
+
+\newpage
+\section{1. pøíklad}
+\subsection{Zadání}
+Stanovte napìtí $U_{R3}$ a proud $I_{R3}$. Použijte metodu postupného zjednodušování obvodu.
+Jsou zadané tyto hodnoty:
+\begin{center}
+\begin{tabular}{r@{ = }lr@{ = }lr@{ = }l}
+$U$   & $80\rm{\ V}$  & $R_3$ & $410\ \Omega$ & $R_6$ & $750\ \Omega$ \\
+$R_1$ & $350\ \Omega$ & $R_4$ & $130\ \Omega$ & $R_7$ & $310\ \Omega$ \\
+$R_2$ & $650\ \Omega$ & $R_5$ & $360\ \Omega$ & $R_8$ & $190\ \Omega$
+\end{tabular}
+\end{center}
+\begin{figure}[hb]
+\centering
+\includegraphics[height=8cm]{pr1/00.eps}
+\caption{Zadané schéma}
+\label{fig:pr1-00}
+\end{figure}
+
+
+\subsection{První zjednodušení}
+Rezistory $R_5$ a $R_7$ jsou zapojeny sériovì, proto je mùžeme nahradit
+rezistorem $R_{57}$ podle vzorce $R_{57} = R_5 + R_7 = 360 + 310 = \mathbf{670\ \Omega}$.\\
+Dále rezistory $R_6$ a $R_8$ jsou zapojeny paralelnì, proto je mùžeme nahradit
+rezistorem $R_{68}$ podle vzorce $R_{68} = \frac{R_6 \cdot R_8}{R_6 + R_8} =
+\frac{750 \cdot 190}{750 + 190}\doteq\mathbf{151.5957\ \Omega}$.\\[11pt]
+Vznikne nám nový obvod:
+\begin{figure}[hb]
+\centering
+\includegraphics[height=5cm]{pr1/01.eps}
+\caption{1. úprava schématu}
+\label{fig:pr1-01}
+\end{figure}
+
+
+\subsection{Transformace hvìzda-trojúhelník}
+Mezi uzly \textbf{A}, \textbf{B} a \textbf{C} jsou rezistory zapojeny do trojúhelníku.
+Toto zapojení pøetransformujeme na hvìzdu.
+Vzniknou nám nové rezistory $R_A$, $R_B$ a $R_C$.\\
+Jejich hodnoty lze dopoèítat dle vzorcù:\\[11pt]
+\begin{tabular}{r@{ = }l@{ = }l@{ $\doteq$ }l}
+$R_A$ & $\frac{R_2 \cdot R_3}{R_2 + R_3 + R_4}$ & $\frac{650 \cdot 410}{650 + 410 + 130}$ &
+$\mathbf{223.9496\ \Omega}$\\[11pt]
+$R_B$ & $\frac{R_2 \cdot R_4}{R_2 + R_3 + R_4}$ & $\frac{650 \cdot 130}{650 + 410 + 130}$ &
+$\mathbf{71.0084\ \Omega}$\\[11pt]
+$R_C$ & $\frac{R_3 \cdot R_4}{R_2 + R_3 + R_4}$ & $\frac{410 \cdot 130}{650 + 410 + 130}$ &
+$\mathbf{44.7899\ \Omega}$
+\end{tabular}
+
+\begin{figure}[hb]
+\centering
+\includegraphics[height=5cm]{pr1/02.eps}
+\caption{2. úprava schématu}
+\label{fig:pr1-02}
+\end{figure}
+
+
+\subsection{Tøetí zjednodušení}
+Rezistory $R_B$ a $R_{57}$ jsou zapojeny sériovì. Stejnì tak rezistory $R_C$ a $R_{68}$ a
+rezistory $R_1$ a $R_A$. Proto je nahradíme rezistory $R_{57B}$, $R_{68C}$ a $R_{1A}$
+podle vzorcù:\\[11pt]
+\begin{tabular}{r@{ = }l@{ = }l@{ = }l}
+$R_{57B}$ & $R_{57} + R_B$ & $670 + 71.0084$      & $\mathbf{741.0084\ \Omega}$\\[6pt]
+$R_{68C}$ & $R_{68} + R_C$ & $151.5957 + 44.7899$ & $\mathbf{196.3856\ \Omega}$\\[6pt]
+$R_{1A}$  & $R_1 + R_A$    & $350 + 223.9496$     & $\mathbf{573.9496\ \Omega}$
+\end{tabular}
+\\
+\begin{figure}[hb]
+\centering
+\includegraphics[height=5cm]{pr1/03.eps}
+\caption{3. úprava schématu}
+\label{fig:pr1-03}
+\end{figure}
+
+\newpage
+\subsection{Ètvrté zjednodušení}
+Rezistory $R_{57B}$ a $R_{68C}$ jsou zapojeny paralelnì. Nahradíme je rezistorem $R_{5678BC}$
+podle vzorce:\\[6pt]
+$R_{5678BC} = \frac{R_{57B} \cdot R_{68C}}{R_{57B} + R_{68C}} =
+\frac{741.0084 \cdot 196.3856}{741.0084 + 196.3856}\doteq\mathbf{155.2425\ \Omega}$.\\[11pt]
+
+\begin{figure}[hb]
+\centering
+\includegraphics[height=5cm]{pr1/04.eps}
+\caption{4. úprava schématu}
+\label{fig:pr1-04}
+\end{figure}
+
+
+\subsection[Výpoèet $R_{EKV}$]{Výpoèet $\mathbf{R_{EKV}}$}
+Rezistory $R_{1A}$ a $R_{5678BC}$ jsou zapojeny sériovì. Nahradíme je rezistorem $R_{EKV}$
+podle vzorce:\\[3pt]
+$R_{EKV} = R_{1A} + R_{5678BC} = 573.9496 + 155.2425 = \mathbf{729.1921\ \Omega}$.\\[11pt]
+\\
+\begin{figure}[hb]
+\centering
+\includegraphics[height=5cm]{pr1/05.eps}
+\caption{5. úprava schématu}
+\label{fig:pr1-05}
+\end{figure}\\
+Pomocí Ohmova zákona dopoèítáme proud na $R_{EKV}$:\ \ $I_{R_{EKV}} = \frac{U}{R_{EKV}} =
+\frac{80}{729.1921}\doteq\mathbf{109.7105}\rm{\textbf{\ mA}}$.\\
+Protože rezistory na \textit{obrázku \ref{fig:pr1-04} (strana \pageref{fig:pr1-04})}
+jsou zapojeny do série, protéká nimi stejný proud I roven $I_{R_{EKV}}$.
+
+
+\subsection{Výpoèet (6. krok)}
+Napìtí $U_{R_{1A}}$ a $U_{R_{5678BC}}$ na rezistorech z \textit{obrázku \ref{fig:pr1-04}
+(strana \pageref{fig:pr1-04})} lze dopoèítat pomocí Ohmova zákona: $U_{R_{1A}} =
+R_{1A} \cdot I_{EKV}$\ \ a\ \ $U_{R_{5678BC}} = R_{5678BC} \cdot I_{EKV}$.\\
+Napìtí $U_{R_{5678BC}}$ je rovno napìtí $U_{R_{57B}}$ a $U_{R_{68C}}$ na
+rezistorech z \textit{obrázku \ref{fig:pr1-03} (strana \pageref{fig:pr1-03})}.
+
+
+\subsection{Výpoèet (7. krok)}
+Díky znalosti napìtí $U_{R_{57B}}$ a $U_{R_{68C}}$ lze vypoèítat $I_{R_{57B}}$ a $I_{R_{68C}}$
+dle vzorcù:\\
+$I_{R_{57B}} = \frac{U_{R_{57B}}}{R_{57B}}$\ \ a\ \ $I_{R_{68C}} =
+\frac{U_{R_{68C}}}{R_{68C}}$. Dále platí, že $I_{R_{EKV}} = I_{R_{57B}} = I_{R_{68C}}$.\\[11pt]
+Pro napìtí mezi body \textbf{A} a \textbf{C} z \textit{obrázku \ref{fig:pr1-02}
+(strana \pageref{fig:pr1-02})} platí vztah $U_{AC} = U_{R_A} + U_{R_C} = U_{R_3}$.\\
+Podaøilo se nám odvodit $U_{R_3}$.
+
+
+\subsection{Výpoèet (8. krok)}
+Potøebujeme odvodit $U_{R_A}$ a $U_{R_C}$. Podle Ohmova zákona platí:
+$U_{R_A} = R_A \cdot I_{R_A}$\ \ a\ \ $U_{R_C} = R_C \cdot I_{R_C}$.\\
+Proud $I_{R_A}$ je roven $I_{R_{1A}} = I_{R_{EKV}}$, proud $I_{R_C}$ je roven $I_{R_{68C}}$.\\
+Pro zjištìní proudu $I_{R_{68C}}$ využijeme opìt Ohmùv zákon:\\[3pt]
+$I_{R_{68C}} = \frac{U_{R_{68C}}}{R_{68C}}$.\\[3pt]
+Napìtí $U_{R_{68C}}$ získáme ze vztahu:\\[3pt]
+$U_{R_{68C}} = U_{R_{57B}} = U - U_{R_{1A}} = U - \left( {R_{1A} \cdot I_{R_{1A}}} \right) =
+U - \left( {R_{1A} \cdot I_{R_{EKV}} }\right)$.\\[5pt]
+Po dosazení získáme hodnotu $I_{R_{68C}} = \frac{U_{R_{68C}}}{R_{68C}} =
+\frac{U - \left({R_{1A} \cdot I_{R_{EKV}}}\right)}{R_{68C}} =
+\frac{80 - \left({573.9496 \cdot 0.1097105}\right)}{196.3856}\doteq\mathbf{86.7258}
+\rm{\textbf{\ mA}}$.\\
+
+
+\subsection{Výsledek}
+Nyní už známe všechny potøebné proudy a hodnoty rezistorù a mùžeme tak dopoèítat samotný
+proud a napìtí na rezistoru $R_3$.\\
+$U_{R_3} = U_{R_A} + U_{R_C} = \left({R_A \cdot I_{R_{EKV}}}\right) +
+\left({R_C \cdot I_{R_{68C}}}\right)$\\
+$U_{R_3} = \left({223.9496 \cdot 0.1097105}\right) + \left({44.7899 \cdot
+0.0867258}\right)\doteq\mathbf{28.4541}\rm{\textbf{\ V}}$,\\[6pt]
+$I_{R_3} = \frac{U_{R_3}}{R_3} = \frac{28.4541}{410}\doteq\mathbf{69.4002}\rm{\textbf{\ mA}}$.
+
+
+
+\newpage
+\section{2. pøíklad}
+\subsection{Zadání}
+Stanovte napìtí $U_{R3}$ a proud $I_{R3}$. Použijte metodu Théveninovy vìty.
+Jsou zadané tyto hodnoty:
+\begin{center}
+\begin{tabular}{r@{ = }lr@{ = }lr@{ = }l}
+$U$   & $180\rm{\ V}$ & $R_2$ & $615\ \Omega$ & $R_4$ & $460\ \Omega$ \\
+$R_1$ & $315\ \Omega$ & $R_3$ & $180\ \Omega$ & $R_5$ & $300\ \Omega$
+\end{tabular}
+\end{center}
+\begin{figure}[hb]
+\centering
+\includegraphics[height=8cm]{pr2/00.eps}
+\caption{Zadané schéma}
+\label{fig:pr2-00}
+\end{figure}
+
+
+\subsection{Alternativní zapojení}
+Rezistor $R_3$ pøedstavuje zátìž, zbytek obvodu po odpojení zátìže se pak chová jako skuteèný
+zdroj napìtí. Proto lze vyjádøit napìtí $U_{R_3}$ jako napìtí na svorkách \textbf{X} a \textbf{Y}
+$= U_{XY}$ a proud $I_{R_3}$ jako $I_{R_3} = \frac{U_{XY}}{R_i + R_3}$, kde $R_i$ pøedstavuje
+vnitøní odpor novì vzniklého zdroje po odpojení zátìže (viz obrázek \ref{fig:pr2-01}).
+\begin{figure}[hb]
+\centering
+\includegraphics[height=5cm]{pr2/01.eps}
+\caption{Zátìž $R_3$ a nový zdroj napìtí}
+\label{fig:pr2-01}
+\end{figure}
+
+
+\newpage
+\subsection[Výpoèet $R_i$]{Výpoèet $\mathbf{R_i}$}
+$R_i$ si vypoèítáme zjednodušením obvodu. Pøièemž ideální zdroje napìtí v obvodu nahradíme vodièem
+(mají nekoneènì malý odpor) a zdroje proudu odpojíme (mají nekoneènì velký odpor).\\[11pt]
+Vznikne nám nový obvod:
+\begin{figure}[hb]
+\centering
+\includegraphics[height=5cm]{pr2/02.eps}
+\caption{Úprava schématu}
+\label{fig:pr2-02}
+\end{figure}
+\\
+Rezistory $R_1$ a $R_4$ jsou zapojeny paralelnì, stejnì tak $R_2$ a $R_5$. Proto je nahradíme
+rezistory $R_{14}$ a $R_{25}$ podle vzorcù:
+\begin{center}
+\begin{tabular}{r@{ = }l@{ = }l@{ $\doteq$ }l}
+$R_{14}$ & $\frac{R_1 \cdot R_4}{R_1 + R_4}$ & $\frac{315 \cdot 460}{315 + 460}$
+	& $\mathbf{186.9677\ \Omega}$\\[6pt]
+$R_{25}$ & $\frac{R_2 \cdot R_4}{R_2 + R_5}$ & $\frac{315 \cdot 300}{615 + 300}$
+	& $\mathbf{201.6393\ \Omega}$
+\end{tabular}
+\end{center}
+Tyto rezistory jsou zapojeny do série, takže výsledný rezistor $R_i$ lze vypoèítat vztahem\\
+$R_i = R_{14} + R_{25} = 186.9677 + 201.6393 = \mathbf{388.6070\ \Omega}$.
+
+
+\subsection[Výpoèet $U_{XY}$]{Výpoèet $\mathbf{U_{XY}}$}
+Dále potøebujeme zjistit $U_{XY}$, na to využijeme druhý Kirchhoffùv zákon o smyèkách:\\
+$U_{XY} = \left|{U_{R_1} - U_{R_2}}\right|$. Napìtí $U_{R_1}$ a $U_{R_2}$ získáme ze vztahu
+$U_{R_1} = R_1 \cdot I_{R_1}$ ($U_{R_2}$ je analogický).\\[3pt]
+Proud $I_{R_1}$ ($I_{R_1}$ analogicky)
+je roven $I_{R_1} = I_{R_4} = \frac{U_{R_1} + U_{R_4}}{R_1 + R_4}$,
+kde platí $U_{R_1} + U_{R_4} = U$.\\[3pt]
+Tudíž napìtí $U_{XY}$ lze odvodit jako\\[3pt]
+$U_{XY} = \left|{R_1 \cdot \frac{U}{R_1 + R_4} - R_2 \cdot \frac{U}{R_2 + R_5}}\right| =
+\left|{\frac{315 \cdot 180}{315 + 460} - \frac{615 \cdot 180}{615 + 300}}\right|
+\doteq\mathbf{47.8223}\rm{\ \textbf{V}}$.
+
+
+\subsection{Výsledek}
+Nyní již není problém vypoèítat $I_{R_3}$:
+$I_{R_3} = \frac{U_{XY}}{R_i + R_3} = \frac{47.8223}{388.6070 + 180}
+\doteq\mathbf{84.1043}\rm{\textbf{\ mA}}$.\\
+Stejnì tak $U_{R_3}$ podle Ohmova zákona:
+$U_{R_3} = R_3 \cdot I_{R_3} = 180 \cdot 0.0841043 =\mathbf{15.1388}\rm{\ \textbf{V}}$.
+
+
+
+\newpage
+\section{3. pøíklad}
+\subsection{Zadání}
+Stanovte napìtí $U_{R3}$ a proud $I_{R3}$. Použijte metodu uzlových napìtí ($U_A$, $U_B$, $U_C$).
+Jsou zadané tyto hodnoty:
+\begin{center}
+\begin{tabular}{r@{ = }lr@{ = }lr@{ = }l}
+$U$   & $145\rm{\ V}$   & $R_1$ & $480\ \Omega$ & $R_4$ & $360\ \Omega$ \\
+$I_1$ & $0.75\rm{\ mA}$ & $R_2$ & $440\ \Omega$ & $R_5$ & $255\ \Omega$ \\
+$I_2$ & $0.85\rm{\ mA}$ & $R_3$ & $530\ \Omega$
+\end{tabular}
+\end{center}
+\begin{figure}[hb]
+\centering
+\includegraphics[height=8cm]{pr3/00.eps}
+\caption{Zadané schéma}
+\label{fig:pr3-00}
+\end{figure}
+
+
+\subsection{Sestavení rovnic}
+Podle prvního Kirchhoffova zákona o proudech sestavíme rovnice pro uzly \textbf{A},
+\textbf{B} a \textbf{C}:\\
+\begin{tabular}{r@{:\ \ }r@{ = }r@{ + }l}
+A & $I_1 + I_{R_2}$ & $I_{R_1}$ & $I_{R_3}$\\
+B & $I_2 + I_{R_3}$ & $I_{R_2}$ & $I_{R_5}$\\
+C & $I_{R_5}$		  & $I_2$     & $I_{R_4}$
+\end{tabular}
+\\[11pt]
+Proudy na rezistorech vypoèítáme pomocí Ohmova zákona a referenèních napìtí $U_A$, $U_B$ a $U_c$:\\
+\begin{tabular}{r@{ = }lr@{ = }l@{ = }l}
+$U_{R_1}$ & $U_A$ 								& $I_{R_1}$ & $\frac{U_{R_1}}{R_1}$ & $\frac{U_A}{R_1}$ \\[6pt]
+$U_{R_2}$ & $U - U_{R_3} = U - U_A + U_B$ & $I_{R_2}$ & $\frac{U_{R_2}}{R_2}$
+	& $\frac{U - U_A + U_B}{R_2}$\\[6pt]
+$U_{R_3}$ & $U_A - U_B$							& $I_{R_3}$ & $\frac{U_{R_3}}{R_3}$
+	& $\frac{U_A - U_B}{R_3}$\\[6pt]
+$U_{R_4}$ & $U_C$									& $I_{R_4}$ & $\frac{U_{R_4}}{R_4}$ & $\frac{U_C}{R_4}$\\[6pt]
+$U_{R_5}$ & $U_B - U_C$							& $I_{R_5}$ & $\frac{U_{R_5}}{R_5}$ & $\frac{U_B - U_C}{R_5}$
+\end{tabular}
+
+
+\newpage
+\subsection{Výpoèet}
+Po dosazení získáme soustavu tøí rovnic o tøech neznámých:\\
+\begin{eqnarray*}
+I_1 + \frac{U - U_A + U_B}{R_2} &=& \frac{U_A}{R_1} + \frac{U_A - U_B}{R_3}\\
+I_2 + \frac{U_A - U_B}{R_3} &=& \frac{U - U_A + U_B}{R_2} + \frac{U_B - U_C}{R_5}\\
+\frac{U_B - U_C}{R_5} &=& I_2 + \frac{U_C}{R_4}
+\end{eqnarray*}
+\\
+Dosadíme konkrétní hodnoty a spoèítáme referenèních napìtí $U_A$, $U_B$ a $U_c$:\\
+
+\begin{tabular}{r@{ = }l}
+$0.75 + \frac{145 - U_A + U_B}{440}$ & $\frac{U_A}{480} + \frac{U_A - U_B}{530}$\\[6pt]
+$0.85 + \frac{U_A - U_B}{530}$       & $\frac{145 - U_A + U_B}{440} + \frac{U_B - U_C}{255}$\\[6pt]
+$\frac{U_B - U_C}{255}$              & $0.85 + \frac{U_C}{360}$\\[22pt]
+
+$\frac{U_A}{440} + \frac{U_A}{480} + \frac{U_A}{530} - \frac{U_B}{440}
+	- \frac{U_B}{530}$ & $\frac{3}{4} + \frac{29}{88}$\\[6pt]
+$\frac{U_A}{530} + \frac{U_A}{440} - \frac{U_B}{530} - \frac{U_B}{440}
+	- \frac{U_B}{255} + \frac{U_C}{255}$ & $\frac{29}{88} - \frac{17}{20}$\\[6pt]
+$\frac{U_B}{255} - \frac{U_C}{255} - \frac{U_C}{360}$ & $\frac{17}{20}$
+\end{tabular}
+\\[11pt]
+\begin{math}
+\left( {\begin{array}{*{20}{c}}
+\frac{97}{23320}    &\frac{-9611}{1189320} & \frac{1}{255}    &\vline & \frac{-229}{440}\\
+\frac{1747}{279840} &\frac{-97}{23320}     & 0                &\vline & \frac{95}{88}\\
+0                   &\frac{1}{255}         & \frac{-41}{6120} &\vline & \frac{17}{20}
+\end{array}} \right)
+\sim
+\left( {\begin{array}{*{20}{c}}
+1 & \frac{-9611}{4947}    & \frac{4664}{4947}    & \vline & \frac{-12137}{97}\\
+0 & \frac{18923}{2374560} & \frac{-1747}{296820} & \vline & \frac{86633}{46560}\\
+0 & \frac{1}{255}         & \frac{-41}{6120}     & \vline & \frac{17}{20}
+\end{array}} \right)
+\sim\\[6pt]
+\left( {\begin{array}{*{20}{c}}
+1 & \frac{-9611}{4947} & \frac{4664}{4947}    &\vline & \frac{-12137}{97}\\
+0 & 1                  & \frac{-13976}{18923} &\vline & \frac{4418283}{18923}\\
+0 & \frac{1}{255}      & \frac{-41}{6120}     &\vline & \frac{17}{20}
+\end{array}} \right)
+\sim
+\left( {\begin{array}{*{20}{c}}
+1 & \frac{-9611}{4947} & \frac{4664}{4947}      &\vline & \frac{-12137}{97}\\
+0 & 1                  & \frac{-13976}{18923}   &\vline & \frac{4418283}{18923}\\
+0 & 0                  & \frac{-25907}{6812280} &\vline & \frac{-24841}{378460}
+\end{array}} \right)
+\sim\\[6pt]
+\left( {\begin{array}{*{20}{c}}
+1 & \frac{-9611}{4947} & \frac{4664}{4947}    &\vline & \frac{-12137}{97}\\
+0 & 1                  & \frac{-13976}{18923} &\vline & \frac{4418283}{18923}\\
+0 & 0                  & 1                    &\vline & \frac{447138}{25907}
+\end{array}} \right)
+\sim
+\left( {\begin{array}{*{20}{c}}
+1 & \frac{-9611}{4947} & 0 & \vline & \frac{-6040515947}{42720643}\\
+0 & 1                  & 0 & \vline & \frac{6379203}{25907}\\
+0 & 0                  & 1 & \vline & \frac{447138}{25907}
+\end{array}} \right)
+\sim\\[6pt]
+\left( {\begin{array}{*{20}{c}}
+1 & 0 & 0 & \vline & \frac{8730336}{25907}\\
+0 & 1 & 0 & \vline & \frac{6379203}{25907}\\
+0 & 0 & 1 & \vline & \frac{447138}{25907}
+\end{array}} \right)
+\sim
+\left( {\begin{array}{*{20}{c}}
+1 & 0 & 0 & \vline & 336.9875\\
+0 & 1 & 0 & \vline & 246.2347\\
+0 & 0 & 1 & \vline & 17.2594
+\end{array}} \right)
+\end{math}
+\\[11pt]
+Získali jsme napìtí $U_A \doteq \mathbf{336.9875}$\textbf{\ V},
+$U_B \doteq \mathbf{246.2347}$\textbf{\ V} a $U_C \doteq \mathbf{17.2594}$\textbf{\ V}.
+
+
+\subsection{Výsledek}
+Nyní spoèítáme napìtí na rezistoru $R_3$ podle vzorce $U_{R_3} = U_A - U_B$.\\
+$U_{R_3} = 336.9875 - 246.2347 \doteq \mathbf{90.7528}$\textbf{\ V}.\\
+Proud zjistíme podle Ohmova zákona $I_{R_3} = \frac{U_{R_3}}{R_3} = 
+\frac{90.7528}{530} \doteq \mathbf{171.2317}$\textbf{\ mA}.
+
+
+
+\newpage
+\section{4. pøíklad}
+\subsection{Zadání}
+Pro napájecí napìtí platí: $u_1 = U_1 \cdot \sin \left( 2\pi ft \right)$,
+$u_2 = U_2 \cdot \sin \left( 2\pi ft \right)$.\\
+Ve vztahu pro napìtí $u_{C_2} = U_{C_2} \cdot \sin \left( 2\pi ft +
+\varphi_{C_2} \right)$ urèete $\left| U_{C_2} \right|$ a $\varphi _{C_2}$.
+Použijte metodu smyèkových proudù.\\
+
+Jsou zadané tyto hodnoty:
+\begin{center}
+\begin{tabular}{r@{ = }lr@{ = }lr@{ = }l}
+$U_1$ & $35\rm{\ V}$  & $R_1$ & $125\ \Omega$  & $L_2$ & $100\rm{\ mH}$ \\
+$U_2$ & $55\rm{\ V}$  & $R_2$ & $140\ \Omega$  & $C_1$ & $200\ \mu$F \\
+$f$   & $70\rm{\ Hz}$ & $L_1$ & $120\rm{\ mH}$ & $C_2$ & $105\ \mu$F
+\end{tabular}
+\end{center}
+\begin{figure}[hb]
+\centering
+\includegraphics[height=8cm]{pr4/00.eps}
+\caption{Zadané schéma}
+\label{fig:pr4-00}
+\end{figure}
+
+
+\subsection{Urèení impedancí}
+Nejdøíve si urèíme fázovou rychlost $\omega$: $\omega = 2\pi f = 2 \cdot 70 \cdot \pi
+= \mathbf{140\pi}$\\
+Dále si urèíme impedance všech souèástek:\\
+\begin{eqnarray*}
+X_{R_1} &=& R_1 = \mathbf{125\ \Omega}\\
+X_{R_2} &=& R_2 = \mathbf{140\ \Omega}\\
+X_{L_1} &=& j \omega L_1 = j \cdot 140\pi \cdot 0.12 = \mathbf{16.8\pi j\ \Omega}\\
+X_{L_2} &=& j \omega L_1 = j \cdot 140\pi \cdot 0.1  = \mathbf{14\pi j\ \Omega}\\
+X_{C_1} &=& \frac{1}{j \omega C_1} = \frac{1}{j \cdot 140\pi \cdot 200 \cdot 10^{-6}} =
+	\mathbf{\frac{250}{7\pi j}\ \Omega}\\
+X_{C_2} &=& \frac{1}{j \omega C_2} = \frac{1}{j \cdot 140\pi \cdot 105 \cdot 10^{-6}} =
+	\mathbf{\frac{10000}{147\pi j}\ \Omega}
+\end{eqnarray*}
+
+
+\newpage
+\subsection{Sestavení rovnic}
+\begin{eqnarray*}
+I_A \cdot X_{R_1} + I_A \cdot X_{L_1} + \left( I_A - I_C \right) \cdot X_{L_2} &=& U_1 + U_2\\
+\left( I_B - I_C \right) \cdot R_2 + I_B \cdot X_{C_1}                         &=& - U_1\\
+\left( I_C - I_B \right) \cdot R_2 + \left( I_C - I_A \right) \cdot X_{L_2} +
+I_C \cdot X_{C_2} &=& 0
+\end{eqnarray*}
+Rovnice pøepíšeme do matice:
+$$\left( {\begin{array}{*{20}{c}}
+X_{R_1} + X_{L_1} + X_{L_2} & 0                 & - X_{L_2}                   & \vline & U_1 + U_2\\
+0                           & X_{R_2} + X_{C_1} & - X_{R_2}                   & \vline & - U_1\\
+- X_{L_2}                   & - X_{R_2}         & X_{R_2} + X_{L_2} + X_{C_2} & \vline & 0
+\end{array}} \right)$$
+\\[11pt]
+Dosadíme konkrétní hodnoty a vyøešíme.\\[3pt]
+\begin{math}
+\left( {\begin{array}{*{20}{c}}
+125 + 16.8\pi j + 14\pi j & 0 & - 14\pi j & \vline & 35 + 55\\
+0 & 140 + \frac{250}{7\pi j} & - 140 & \vline & - 35\\
+- 14\pi j & - 140 & 140 + 14\pi j + \frac{10000}{147\pi j} & \vline & 0
+\end{array}} \right)
+\sim\\[6pt]
+\left( {\begin{array}{*{20}{c}}
+1 & 0 & 0 & \vline & -0.1874 - 0.2661j\\
+0 & 1 & 0 & \vline & -1.5699 + 1.8660j\\
+0 & 0 & 1 & \vline & -1.1684 + 1.9935j
+\end{array}} \right)
+\sim
+\left( {\begin{array}{*{20}{c}}
+1 & 0 & 0 & \vline & 0.3254\\
+0 & 1 & 0 & \vline & 2.4385\\
+0 & 0 & 1 & \vline & 2.3106
+\end{array}} \right)
+\end{math}
+\\[22pt]
+
+
+\subsection{Výsledné napìtí}
+Získali jsme proud $I_C$, který je roven proudu na $C_2$ ($I_{C_2}$), zbývá urèit $U_{C_2}$.
+\begin{eqnarray*}
+U_{C_2}                &=& I_{C_2} \cdot X_{C_2}\\
+U_{C_2}                &=& \left(-1.1684 + 1.9935j\right) \cdot \frac{10000}{147\pi j} \rm{\ V}\\
+U_{C_2}                &=& 43.1667 + 25.3002j \rm{\ V}\\
+\mathbf{\left| U_{C_2} \right|} &=& \mathbf{50.0347} \rm{\textbf{\ V}}
+\end{eqnarray*}
+
+
+\subsection[Urèení $\varphi _{C_2}$]{Urèení $\mathbf{\varphi _{C_2}}$}
+\begin{eqnarray*}
+\tan {\varphi _{C_2}}   &=&
+\frac{{\rm Im} \left( U_{C_2} \right)}{{\rm Re} \left( U_{C_2} \right)}\\[6pt]
+\mathbf{\varphi _{C_2}} &=& \mathbf{0.5301\pi}
+\end{eqnarray*}
+
+
+
+\newpage
+\section{5. pøíklad}
+\subsection{Zadání}
+Sestavte diferenciální rovnici popisující chování obvodu.
+Dále ji upravte dosazením hodnot parametrù.
+Vypoèítejte analytické øešení $u_C = f\left( t \right)$.\\
+Proveïte kontrolu výpoètu dosazením do sestavené diferenciální rovnice.\\
+
+Jsou zadané tyto hodnoty:
+\begin{center}
+\begin{tabular}{r@{ = }lr@{ = }lr@{ = }lr@{ = }l}
+$U$ & $7\rm{\ V}$  & 
+$C$ & $45\rm{\ F}$ &
+$R$ & $25\ \Omega$ &
+$u_C \left( 0 \right)$ & $3\rm{\ V}$
+\end{tabular}
+\end{center}
+\begin{figure}[hb]
+\centering
+\includegraphics[height=8cm]{pr5/00.eps}
+\caption{Zadané schéma}
+\label{fig:pr5-00}
+\end{figure}
+
+
+\subsection{Sestavení rovnice}
+\begin{tabular}{r@{ = }lcr@{ = }l}
+$u_c'$ & $\frac{1}{C} \cdot I$\\[11pt]
+$u_c'$ & $\frac{1}{C} \cdot \frac{U - u_c}{R}$ &&
+	$U_R + u_c$       & $U$\\[11pt]
+$u_c'$ & $\frac{1}{45} \cdot \frac{7-u_c}{25}$ &&
+	$R \cdot I + U_C$ & $U$\\[11pt]
+$u_c'$ & $\frac{7-u_c}{1080}$ &&
+	$\mathbf{I}$      & $\mathbf{\frac{U - u_c}{R}}$\\[22pt]
+$\mathbf{u_c' + \frac{1}{1080}u_c}$ & $\mathbf{\frac{7}{1080}}$
+\end{tabular}
+\\[11pt]
+
+
+\subsection{Charakteristická rovnice}
+\begin{eqnarray*}
+\lambda + \frac{1}{1080} &=& 0\\
+\lambda &=& - \frac{1}{1080}
+\end{eqnarray*}
+\newpage
+
+
+\subsection{Obecný tvar øešení}
+\begin{eqnarray*}
+u_c\left( t \right)  &=& K \cdot e^{\lambda t}\\
+u_c\left( t \right)  &=& K \cdot e^{\frac{-1}{1080} t}\\
+u_c'\left( t \right) &=& K' \cdot e^{\frac{-1}{1080} t} + K \cdot e^{\frac{-1}{1080} t}
+	\cdot \frac{-1}{1080}
+\end{eqnarray*}
+\\
+Dosadíme do sestavené rovnice:
+\begin{eqnarray*}
+u_c' + \frac{1}{1080}u_c &=& \frac{7}{1080}\\
+K' \cdot e^{\frac{-1}{1080}t} + K \cdot e^{\frac{-1}{1080}t} \cdot \frac{-1}{1080}
++ \frac{1}{1080} \cdot K \cdot e^{\frac{-1}{1080}t} &=& \frac{7}{1080}\\
+K' \cdot e^{\frac{-1}{1080}t} &=& \frac{7}{1080}\\
+K' &=& \frac{7 \cdot e^{\frac{1}{1080}t}}{1080}
+\end{eqnarray*}
+\\
+Provedeme integraci:
+\begin{eqnarray*}
+\int K'dt &=& \int{\frac{7}{1080} \cdot e^{\frac{1}{1080}t}}dt\\
+K + A     &=& \frac{7}{1080} \int{e^{\frac{1}{1080}t}dt}\\
+K + A     &=& \frac{7}{1080} \cdot \frac{1}{\frac{1}{1080}} \cdot e^{\frac{1}{1080}t}\\
+K         &=& 7 e^{\frac{1}{1080}t} - A
+\end{eqnarray*}
+\\
+Dosadíme $K$ zpìt do charakteristické rovnice:
+\begin{eqnarray*}
+u_c \left( t \right) &=& \left( 7 e^{\frac{1}{1080}t} - A \right) \cdot e^{\frac{-1}{1080}t}\\
+u_c \left( t \right) &=& 7 e^0 - A \cdot e^{\frac{-1}{1080}t}\\
+u_c \left( t \right) &=& 7 - A \cdot e^{\frac{-1}{1080}t}
+\end{eqnarray*}
+\\
+Vliv poèáteèní podmínky:
+\begin{eqnarray*}
+u_c \left( 0 \right) &=& 5 \rm{\ V}\\
+5                    &=& 7 - A \cdot e^0\\
+5                    &=& 7 - A\\
+A                    &=& 2
+\end{eqnarray*}
+
+
+\subsection{Výsledek}
+$$\mathbf{u_c \left( t \right) = 7 - 2 e^{\frac{-1}{1080}t}}$$
+
+
+\newpage
+\subsection{Zkouška}
+\begin{eqnarray*}
+u_c' + \frac{1}{1080} u_c &=& \frac{7}{1080}\\
+\\
+u_c  &=& 7 - 2 e^{\frac{-1}{1080}t}\\
+u_c' &=& 0 - 2 \cdot e^{\frac{-1}{1080}t} \cdot \frac{-1}{1080}\\
+\\
+\frac{2}{1080} \cdot e^{\frac{-1}{1080}t} + \frac{1}{1080} \cdot
+\left( 7 - 2 e^{\frac{-1}{1080}t} \right)
+	&=& \frac{7}{1080}\\
+2 e^{\frac{-1}{1080}t} + 7 - 2 e^{\frac{-1}{1080}t} &=& 7\\
+7 &=& 7
+\end{eqnarray*}
+\begin{center}
+    Ovìøeno
+\end{center}
+
+
+
+\newpage
+\section{Výsledky}
+\begin{center}
+\LARGE
+\begin{tabular}{|r|r@{ = }l|}
+\hline
+\textbf{Pøíklad 1}  & $U_{R_3}$ & 28.4541 V\\
+\textit{varianta A} & $I_{R_3}$ & 69.4002 mA\\
+\hline
+\textbf{Pøíklad 2}  & $U_{R_3}$ & 15.1388 V\\
+\textit{varianta G} & $I_{R_3}$ & 84.1043 mA\\
+\hline
+\textbf{Pøíklad 3}  & $U_{R_3}$ & 90.7528 V\\
+\textit{varianta F} & $I_{R_3}$ & 171.2317 mA\\
+\hline
+\textbf{Pøíklad 4}  & $\left| U_{C_2} \right|$ & 50.0347\ V\\
+\textit{varianta A} & $\varphi _{C_2}$         & $0.5301\pi$ \\
+\hline
+\textbf{Pøíklad 5}  & $u_c' + \frac{1}{1080} u_c$ & $\frac{7}{1080}$\\[3pt]
+\textit{varianta G} & $u_c \left( t \right)$      & $7 - 2 e^{\frac{-1}{1080}t}$\\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}
