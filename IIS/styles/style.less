@@ -1,0 +1,452 @@
+/*************************
+ ***Format cele stranky***
+ ************************/
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+}
+
+.inner {
+	position: relative;
+}
+
+html {
+	height: 100%;
+	height: 100vh;
+}
+
+body {
+	min-height: 100%;
+	min-height: 100vh;
+	background-color: #232323;
+	margin: 0;
+	font-family: Arial, sans-serif;
+}
+
+a {
+	color: black;
+	// text-decoration: none;
+		
+	&:hover {
+		color: red;
+	}
+}
+
+.clear {
+	clear: both;
+}
+
+p {
+	text-align: justify;
+}
+
+.body-content {
+	background-color: white;
+}
+
+.hide-but {
+	position: relative;
+	display: none;
+	text-align: right;
+	font-style: italic;
+	padding-right: 4em;
+	margin-top: 1em;
+
+	cursor: hand;
+	cursor: pointer;
+	user-select: none;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+.body-content {
+	min-height: ~"calc(100vh - 11.5em)";
+}
+
+.red {
+	color: red;
+	font-weight: bold;
+}
+
+.inline {
+	background-color: white;
+
+	html {
+		height: 0;
+	}
+
+	body, .body-content {
+		min-height: 0;
+	}
+}
+
+.warning {
+	font-weight: bold;
+	color: red;
+}
+
+/*************************
+ ******  Login page  *****
+ ************************/
+.login-page {
+	#main {
+		display: block;
+		width: 400px;
+		margin: 0 auto;
+		padding-top: 20vh;
+	}
+
+	h3 {
+		padding-bottom: 2em;
+		text-align: center;
+		font-weight: normal;
+	}
+	
+	form {
+		.container {
+			padding: 0.4em 0;
+			width: 50%;
+			margin: 0 auto;
+		
+			label {
+				display: inline-block;
+				width: 3em;
+				padding-right: 0.4em;
+				float: none;
+				text-align: left;
+			}
+
+			.fa-eye {
+				margin-left: 0;
+			}
+
+			&.required.empty:after {
+				content: initial;
+			}
+		}
+		
+
+		input {
+			width: initial;
+
+			&#submit {
+				margin: 0 auto;
+				display: block;
+				padding: 7px 20px;
+				margin-top: 1em;
+				cursor: pointer;
+			}
+		}
+
+		.error {
+			color: red;
+			font-weight: bold;
+			text-align: center;
+		}
+	}
+	
+}
+
+
+
+/*************************
+ ********  Forms  ********
+ ************************/
+@form_width: 40%;
+form {
+	.container {
+		margin: 5px;
+
+		.fa-eye {
+			margin-left: 1em;
+		}
+	
+		&.required.empty {
+			color: red;
+
+			&:after {
+				content: 'Vyplňte prosím';
+				margin-left: 1em;
+				position: absolute;
+				left: 20% + @form_width;
+			}
+			
+			input {
+				border: solid 2px red;
+			}
+		}
+
+		&.required label:after {
+			content: '*';
+			position: absolute;
+			right: 0.2em;
+			color: red;
+			font-size: 130%;
+		}
+
+		.content {
+			display: inline-block;
+			width: @form_width;
+		}
+	}
+
+
+	label {
+		width: 20%;
+		display: block;
+		float: left;
+		text-align: right;
+		padding-right: 1em;
+		position: relative;
+	}
+
+	input {
+		width: @form_width;
+
+		&[ type = submit ] {
+			margin-top: 1em;
+		}
+
+		&[ type = checkbox ] {
+			width: initial;
+		}
+
+		&[ type = radio  ],
+		&[ type = submit ] {
+			width: initial;
+		}
+	}
+	
+	&.evaluations input {
+		width: initial;
+	}
+}
+
+
+/************************
+ *******  Tabulky  ******
+ ***********************/
+table {
+	border-collapse: collapse;
+	
+	td {
+		padding: 3px 5px;
+		border: solid 1px black;
+		
+		a.fa {
+			text-decoration: none;
+			cursor: pointer;
+		}
+	}
+
+	th {
+		border: solid 1px black;
+		background: silver;
+	}
+
+	tr:nth-child( 2n - 1 ) {
+		background: #EEE;
+	}
+}
+
+
+
+
+
+/************************
+ *** Přehled předmětů ***
+ ***********************/
+body.subjects {
+	.subject-container {
+		display: block;
+		text-decoration: none;
+		padding: 0.3em;
+		margin-left: 1em;
+	}
+
+	textarea#about {
+		width: ~'calc(100% - 6px)';
+		height: 10em;
+		margin-top: 1em;
+	}
+
+	button {
+		&#save-about {
+			margin-bottom: 3em;
+			float: right;
+		}
+
+		&#add-exam {
+			margin-top: 1em;
+		}
+	}
+
+	div#about-result {
+		float: right;
+		margin-right: 1em;
+	}
+
+	h3 {
+		margin-bottom: 1em;
+	}
+}
+
+
+
+/*************************
+ ****** Hlavni obsah *****
+ ************************/
+
+
+#main {
+	padding: 2em;
+	/*background-color: #ddd;*/
+	
+	h1 {
+		font-size: 1.75em;
+	}
+
+	h2 {
+		font-size: 1.25em;
+	}
+}
+
+body.inline #main {
+	padding: 0;
+}
+
+
+
+
+/*************************
+ ******** Paticka ********
+ ************************/ 
+footer {
+	background-color: #232323;
+	color: #eee;
+	padding: 2em 1em 2em;
+}
+
+footer .right {
+	display: inline-block;
+	text-align: right;
+	float: right;
+	max-width: 50%;
+}
+
+footer .left {
+	display: inline-block;
+	text-align: left;
+	float: right;
+	max-width: 50%;
+}
+
+
+
+
+/*************************
+ **** Mensi obrazovky ****
+ ************************/
+@media (max-width: 960px) {
+	#main-menu {
+		top: 11em;
+		left: 2em;
+	}
+	header {
+		padding-bottom: 2em;
+		width: initial;
+		display: inline-block;
+		padding-left: 1em;
+	}
+}
+
+
+
+/*************************
+ ******* Telefony ********
+ ************************/ 
+@media (max-width: 649px) {
+	header {
+		font-size: 100%;
+		padding: 2em 0 0.5em 1em;
+	}
+
+	#main-menu {
+		display: none;
+		// TODO Predelat na hamburger
+	}
+
+	#left-column {
+		display: none;
+	}
+
+	/*Zobraz v patičce odkaz na mapu stránek*/
+
+	#menu-btn {
+		display: initial;
+	}
+	
+	#main-menu {
+		display: none;
+		position: absolute;
+			top: 1.5em;
+			left: 0;
+		background-color: red;
+		width: 100%;
+		height: 100%;
+	}
+
+	#main-menu > ul {
+		width: 100%;
+	}
+
+	#main-menu li {
+		display: block;
+	}
+
+	#main-menu a {
+		border: none;
+		border-radius: 0;
+		background-color: transparent;
+		background-image: none;
+		position: initial;
+	}
+
+	#main-menu > ul > li:hover {
+		bottom: 0;
+		transition: none;
+	}
+
+	#main-menu .active a {
+		background-image: none;
+	}
+
+	#main-menu > ul > li:hover > a {
+		padding-bottom: 10px;
+		background-color: transparent;
+		background-image: none;
+	}
+
+	#main-menu > ul ul {
+		background-color: green;
+		visibility: visible;
+		position: initial;
+		border-style: none;
+		border-radius: 0;
+		white-space: normal;
+	}
+}
+
+
+
+/*************************
+ **** Vetsi obrazovky ****
+ ************************/
+@media (min-width: 1201px) {
+	.inner {
+		width: 1200px !important;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Projekt IIS</title>
+		<style type="text/css">
+			table { border-collapse: collapse; }
+			td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+			dt { font-weight: bold; margin-top: 0.5em; }
+		</style>
+	</head>
+
+
+
+	<body>
+
+
+		<h1>Zkoušky</h1>
+		<dl>
+			<dt>Autoři</dt>
+			<dd>Václav Martinka (xmarti76)
+				<a target="_blank" href="mailto:xmarti76@vutbr.cz">xmarti76@vutbr.cz</a> - Správa uživatelů, webová šablona, formuláře
+			</dd>
+			<dd>Martin Pumrm (xpumrm00)
+				<a target="_blank" href="mailto:xpumrm00@vutbr.cz">xpumrm00@vutbr.cz</a> - Databáze, testování, vzhled
+			</dd>
+
+			<dt>URL aplikace</dt>
+			<dd>
+				<a target="_blank" href="http://www.stud.fit.vutbr.cz/~xmarti76/IIS">http://www.stud.fit.vutbr.cz/~xmarti76/IIS</a>
+			</dd>
+		</dl>
+
+		
+		<h2>Uživatelé systému pro testování</h2>
+		<table>
+			<tr>
+				<th>Login</th>
+				<th>Heslo</th>
+				<th>Role</th>
+			</tr>
+			<tr>
+				<td>admin</td>
+				<td>admin</td>
+				<td>Administrátor</td>
+			</tr>
+			<tr>
+				<td>ucitel</td>
+				<td>TODO</td>
+				<td>Vyučující</td>
+			</tr>
+			<tr>
+				<td>student</td>
+				<td>TODO</td>
+				<td>Student</td>
+			</tr>
+		</table>
+
+
+		<h2>Implementace</h2>
+		<p>Struèná dokumentace k implementaci, která popisuje, které PHP skripty implementují jednotlivé pøípady pou¾ití uvedené v use-case diagramu z IDS. V pøípadì, ¾e bylo nutno pøi implementaci uèinit zmìny v návrhu, musí být v dokumentaci zdùvodnìny.</p>
+
+
+		<h2>Instalace</h2>
+			<ul>
+				<li>Rozbalit archiv ve složce, popř. podsložce, WWW na serveru.</li>
+				<li>Přesunout soubor .htaccess do složky WWW (pokud zde už soubor existuje, tak pouze doplnit jeho obsah)</li>
+				<li>Upravit .htaccess (bohužel na Evě se nechová zcela korektně, tudíž je třeba provést změny pro jiné servery)</li>
+				<li>Databáze se tvoří pomocí PHP scriptu /sql/create-tables.php (ve výchozí konfiguraci lze tento script volat pouze z prostředí pod účtem admina, pro prvotní inicializaci je tudíž nutné vypnout ochranu pomocí proměnné na prvním řádku)</li>
+				<li>Nyní je korektně vytvořená databáze, která obsahuje jeden účet admin s heslem admin - <strong>JE NUTNÉ</strong> minimálně změnit heslo, ideálně vytvořit nového admina a poté tohoto smazat.</li>
+		</ul>
+
+
+		<h2>Známé problémy</h2>
+		<p>Zde popi¹te, které body zadání (IDS a IIS) nejsou implementovány a z jakého dùvodu. Napø. &bdquo;Z èasových dùvodù nebyla implementována správa u¾ivatelù.&rdquo; Pomù¾ete tím zrychlit opravování, kdy¾ neimplementované funkce nebudeme muset dlouze hledat.</p>
+
+	</body>
+</html>

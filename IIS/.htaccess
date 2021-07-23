@@ -1,0 +1,8 @@
+DefaultCharset utf-8
+
+RewriteEngine on
+
+# Hezke odkazy
+RewriteRule  IIS/student/(.*) http://www.stud.fit.vutbr.cz/~xmarti76/IIS/page.php?page=$1&role=student
+RewriteRule  IIS/teacher/(.*) http://www.stud.fit.vutbr.cz/~xmarti76/IIS/page.php?page=$1&role=teacher
+RewriteRule  IIS/admin/(.*)   http://www.stud.fit.vutbr.cz/~xmarti76/IIS/page.php?page=$1&role=admin
